@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>A request passes along handlers until one accepts it</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M18 24H25M38 24H46M52 31V48H32M37 43L32 48L37 53" stroke="#315dce" /><rect x="6" y="18" width="12" height="12" fill="none" stroke="#191d22" /><rect x="26" y="18" width="12" height="12" fill="none" stroke="#191d22" /><rect x="46" y="18" width="12" height="12" fill="#315dce" />
+  </g>
+</svg>

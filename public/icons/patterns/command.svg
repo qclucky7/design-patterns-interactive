@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>An action is packaged between the invoker and receiver</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M18 32H24M40 32H46" stroke="#191d22" /><rect x="6" y="26" width="12" height="12" fill="none" stroke="#191d22" /><rect x="24" y="14" width="16" height="36" stroke="#315dce" /><path d="M29 25H35M29 32H35M29 39H35" stroke="#315dce" /><rect x="46" y="26" width="12" height="12" fill="#191d22" />
+  </g>
+</svg>

@@ -1,0 +1,165 @@
+{
+  "title": "从问题出发，理解设计模式。",
+  "animation": {
+    "label": "四个模块通过不同组合展示设计模式的灵活性",
+    "next": "换个组合",
+    "pause": "暂停自动重组",
+    "play": "开始自动重组",
+    "scenes": [
+      {"title": "模块不变，组合可变", "description": "同样的四个方块，可以有不同的协作方式。"},
+      {"title": "让职责接力", "description": "拆开职责，让每个模块处理自己的一环。"},
+      {"title": "让变化独立", "description": "两个维度独立变化，按需组合。"},
+      {"title": "让响应联动", "description": "一处变化，通知多个模块各自响应。"}
+    ]
+  },
+  "description": "先看变化带来的问题，再看结构如何解决。用交互演示和代码，把每一种模式学明白。",
+  "directory": "模式目录",
+  "search": "搜索模式名称",
+  "empty": "没有找到匹配的模式",
+  "pending": "待编写",
+  "available": "开始学习",
+  "status": "23 种设计模式已全部开放。选择一个真实场景，开始体验结构与代码的变化。",
+  "onThisPage": "本页内容",
+  "menu": "打开目录",
+  "close": "关闭目录",
+  "all": "全部设计模式",
+  "chapters": [
+    "模式概览",
+    "问题场景",
+    "核心思想",
+    "为什么有效",
+    "何时使用",
+    "一句话记住"
+  ],
+  "categories": {
+    "creational": {
+      "name": "创建型",
+      "description": "把对象的创建方式与使用方式分开。"
+    },
+    "structural": {
+      "name": "结构型",
+      "description": "组织对象之间的关系，让结构更灵活。"
+    },
+    "behavioral": {
+      "name": "行为型",
+      "description": "分配职责，协调对象之间的行为。"
+    }
+  },
+  "patterns": {
+    "singleton": {
+      "name": "单例模式",
+      "englishName": "Singleton",
+      "summary": "让一个类只有一个实例，并提供统一访问入口。"
+    },
+    "factory-method": {
+      "name": "工厂方法模式",
+      "englishName": "Factory Method",
+      "summary": "把对象创建交给子类，避免调用方依赖具体类型。"
+    },
+    "abstract-factory": {
+      "name": "抽象工厂模式",
+      "englishName": "Abstract Factory",
+      "summary": "创建一组相互配合的对象，保持产品族一致。"
+    },
+    "builder": {
+      "name": "建造者模式",
+      "englishName": "Builder",
+      "summary": "分步骤构建复杂对象，复用同一套构建流程。"
+    },
+    "prototype": {
+      "name": "原型模式",
+      "englishName": "Prototype",
+      "summary": "通过复制已有对象创建新对象。"
+    },
+    "adapter": {
+      "name": "适配器模式",
+      "englishName": "Adapter",
+      "summary": "转换接口，让原本不兼容的对象协作。"
+    },
+    "bridge": {
+      "name": "桥接模式",
+      "englishName": "Bridge",
+      "summary": "分离抽象与实现，让两个维度独立扩展。"
+    },
+    "composite": {
+      "name": "组合模式",
+      "englishName": "Composite",
+      "summary": "把部分和整体组织成树，用统一方式操作。"
+    },
+    "decorator": {
+      "name": "装饰模式",
+      "englishName": "Decorator",
+      "summary": "在不修改对象的情况下，逐层添加职责。"
+    },
+    "facade": {
+      "name": "外观模式",
+      "englishName": "Facade",
+      "summary": "为复杂子系统提供简洁的统一入口。"
+    },
+    "flyweight": {
+      "name": "享元模式",
+      "englishName": "Flyweight",
+      "summary": "共享重复状态，减少大量相似对象的内存占用。"
+    },
+    "proxy": {
+      "name": "代理模式",
+      "englishName": "Proxy",
+      "summary": "通过替身控制访问、延迟加载或添加保护。"
+    },
+    "chain-of-responsibility": {
+      "name": "责任链模式",
+      "englishName": "Chain of Responsibility",
+      "summary": "让请求沿处理链传递，直到合适的对象接手。"
+    },
+    "command": {
+      "name": "命令模式",
+      "englishName": "Command",
+      "summary": "把操作封装成对象，支持排队、记录和撤销。"
+    },
+    "interpreter": {
+      "name": "解释器模式",
+      "englishName": "Interpreter",
+      "summary": "用语法规则和表达式对象解释简单语言。"
+    },
+    "iterator": {
+      "name": "迭代器模式",
+      "englishName": "Iterator",
+      "summary": "按顺序访问集合，不暴露内部结构。"
+    },
+    "mediator": {
+      "name": "中介者模式",
+      "englishName": "Mediator",
+      "summary": "集中协调对象交互，减少彼此直接依赖。"
+    },
+    "memento": {
+      "name": "备忘录模式",
+      "englishName": "Memento",
+      "summary": "保存和恢复对象状态，不暴露内部细节。"
+    },
+    "observer": {
+      "name": "观察者模式",
+      "englishName": "Observer",
+      "summary": "订阅变化，一个对象更新时通知多个对象。"
+    },
+    "state": {
+      "name": "状态模式",
+      "englishName": "State",
+      "summary": "将状态行为分离，状态改变时切换对象行为。"
+    },
+    "strategy": {
+      "name": "策略模式",
+      "englishName": "Strategy",
+      "summary": "把变化的算法独立出来，按需替换，保持主流程稳定。"
+    },
+    "template-method": {
+      "name": "模板方法模式",
+      "englishName": "Template Method",
+      "summary": "固定算法骨架，将部分步骤交给子类实现。"
+    },
+    "visitor": {
+      "name": "访问者模式",
+      "englishName": "Visitor",
+      "summary": "在不修改对象结构的情况下添加新的操作。"
+    }
+  }
+}

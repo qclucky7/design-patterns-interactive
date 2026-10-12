@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Transitions choose the current behavior</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M23 17H41M36 12L41 17L36 22M49 25V45H38M43 40L38 45L43 50M22 45H15V25" stroke="#315dce" /><rect x="7" y="9" width="16" height="16" fill="#315dce" /><rect x="41" y="9" width="16" height="16" fill="none" stroke="#191d22" /><rect x="22" y="37" width="16" height="16" fill="none" stroke="#191d22" />
+  </g>
+</svg>

@@ -1,0 +1,469 @@
+{
+  "singleton": {
+    "scenario": "The cart and a background job each create a settings store and see different flag values.",
+    "request": "Let both entry points share one in-process settings store.",
+    "problem": "An unrestricted constructor creates independent state every time. Passing one object around can share it, but does not constrain future construction.",
+    "solution": "Hide direct construction and let the class return its retained instance through one access point. This example guarantees uniqueness only within its JS runtime or Python process, not across distributed workers or concurrent initialization.",
+    "benefits": [
+      "Shared state no longer diverges through repeated construction.",
+      "Creation and lifetime management have one owner.",
+      "Callers can coordinate a genuinely shared in-process resource."
+    ],
+    "when": "Use it for a truly singular in-process resource with a clearly defined lifetime.",
+    "avoid": "Do not use it merely as a convenient global variable. Prefer injected lifetimes for test doubles, request isolation or concurrent contexts.",
+    "tradeoff": "A global access point hides dependencies and retains state between calls. Tests need isolation and concurrent initialization needs synchronization.",
+    "remember": "Singleton controls instance count; it is not permission to make everything global.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Two settings stores diverge",
+        "title": "Two settings stores diverge",
+        "description": "The cart and a background job each create a settings store and see different flag values.",
+        "insight": "An unrestricted constructor creates independent state every time. Passing one object around can share it, but does not constrain future construction.",
+        "action": "Try sharing settings",
+        "graphNote": "Independent construction produces inconsistent settings.",
+        "codeNote": "Independent construction produces inconsistent settings."
+      },
+      {
+        "number": "02",
+        "label": "Share the same state",
+        "title": "Share the same state",
+        "description": "Let both entry points share one in-process settings store.",
+        "insight": "An unrestricted constructor creates independent state every time. Passing one object around can share it, but does not constrain future construction.",
+        "action": "Constrain creation",
+        "graphNote": "Sharing a reference fixes these callers but not future construction.",
+        "codeNote": "Sharing a reference fixes these callers but not future construction."
+      },
+      {
+        "number": "03",
+        "label": "Control the construction entry",
+        "title": "Control the construction entry",
+        "description": "Hide direct construction and let the class return its retained instance through one access point.",
+        "insight": "Hide direct construction and let the class return its retained instance through one access point. This example guarantees uniqueness only within its JS runtime or Python process, not across distributed workers or concurrent initialization.",
+        "action": "Verify identity",
+        "graphNote": "Hide construction and retrieve the instance through one entry point.",
+        "codeNote": "Hide construction and retrieve the instance through one entry point."
+      },
+      {
+        "number": "04",
+        "label": "Retrieve the same object again",
+        "title": "Retrieve the same object again",
+        "description": "Singleton controls instance count; it is not permission to make everything global.",
+        "insight": "A global access point hides dependencies and retains state between calls. Tests need isolation and concurrent initialization needs synchronization.",
+        "action": "Start again",
+        "graphNote": "Repeated retrieval returns the same identity and shared flags.",
+        "codeNote": "Repeated retrieval returns the same identity and shared flags."
+      }
+    ],
+    "labels": {
+      "client": "Cart",
+      "job": "Job",
+      "first": "Settings A",
+      "second": "Settings B",
+      "shared": "Shared settings"
+    },
+    "annotations": [
+      {},
+      {
+        "client": "Same responsibility",
+        "first": "Focus of this step",
+        "job": "Same responsibility"
+      },
+      {
+        "client": "Same responsibility",
+        "shared": "Focus of this step",
+        "job": "Same responsibility"
+      },
+      {
+        "client": "Same responsibility",
+        "shared": "Same responsibility",
+        "job": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Start with lifetime, then uniqueness",
+    "keyIdeas": [
+      "Count: repeated retrieval through one entry returns the same object.",
+      "Lifetime: request, process and distributed scope are different boundaries.",
+      "Visibility: convenient access does not justify hidden dependencies."
+    ],
+    "distinction": "Singleton and dependency injection are compatible: one controls count, the other supplies dependencies."
+  },
+  "factory-method": {
+    "scenario": "A notification workflow prepares text and sends email, but constructs the email sender directly.",
+    "request": "Add SMS delivery while keeping the formatting and logging workflow.",
+    "problem": "Choosing concrete senders inside the workflow forces edits for each new channel. A simple factory centralizes that decision, but one function still owns every product choice.",
+    "solution": "Keep the workflow in a creator base class and make sender creation an overridable factory method. Email and SMS creators return products behind one interface; the base workflow invokes that method rather than constructing a concrete sender.",
+    "benefits": [
+      "A new creator adds a channel without changing the workflow.",
+      "Products implement a common sending interface.",
+      "Each creator owns its construction parameters and initialization."
+    ],
+    "when": "Use it when a reusable creator workflow needs subclasses to choose different products.",
+    "avoid": "Avoid a creator hierarchy just to replace a single constructor call.",
+    "tradeoff": "Each product may require a creator subclass. This inheritance-based extension is different from a simple factory.",
+    "remember": "The workflow stays in the creator; subclasses decide the product through the factory method.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Workflow constructs email",
+        "title": "Workflow constructs email",
+        "description": "A notification workflow prepares text and sends email, but constructs the email sender directly.",
+        "insight": "Choosing concrete senders inside the workflow forces edits for each new channel. A simple factory centralizes that decision, but one function still owns every product choice.",
+        "action": "Add SMS delivery",
+        "graphNote": "The workflow chooses email directly.",
+        "codeNote": "The workflow chooses email directly."
+      },
+      {
+        "number": "02",
+        "label": "Workflow adds a channel branch",
+        "title": "Workflow adds a channel branch",
+        "description": "Add SMS delivery while keeping the formatting and logging workflow.",
+        "insight": "Choosing concrete senders inside the workflow forces edits for each new channel. A simple factory centralizes that decision, but one function still owns every product choice.",
+        "action": "Extract a factory method",
+        "graphNote": "The SMS branch enters the common function.",
+        "codeNote": "The SMS branch enters the common function."
+      },
+      {
+        "number": "03",
+        "label": "Subclasses create the product",
+        "title": "Subclasses create the product",
+        "description": "Keep the workflow in a creator base class and make sender creation an overridable factory method.",
+        "insight": "Keep the workflow in a creator base class and make sender creation an overridable factory method. Email and SMS creators return products behind one interface; the base workflow invokes that method rather than constructing a concrete sender.",
+        "action": "Use the SMS creator",
+        "graphNote": "The common workflow invokes overridable creation.",
+        "codeNote": "The common workflow invokes overridable creation."
+      },
+      {
+        "number": "04",
+        "label": "SMS reuses the workflow",
+        "title": "SMS reuses the workflow",
+        "description": "The workflow stays in the creator; subclasses decide the product through the factory method.",
+        "insight": "Each product may require a creator subclass. This inheritance-based extension is different from a simple factory.",
+        "action": "Start again",
+        "graphNote": "An SMS creator reuses text preparation and delivery.",
+        "codeNote": "An SMS creator reuses text preparation and delivery."
+      }
+    ],
+    "labels": {
+      "flow": "Workflow",
+      "branch": "Channel branch",
+      "email": "Email sender",
+      "sms": "SMS sender",
+      "creator": "Creator / factory method",
+      "mailCreator": "Email creator",
+      "smsCreator": "SMS creator"
+    },
+    "annotations": [
+      {},
+      {
+        "flow": "Same responsibility",
+        "branch": "Focus of this step",
+        "email": "Same responsibility",
+        "sms": "New structure"
+      },
+      {
+        "creator": "Focus of this step",
+        "mailCreator": "New structure",
+        "email": "Same responsibility",
+        "flow": "Same responsibility"
+      },
+      {
+        "creator": "Same responsibility",
+        "mailCreator": "Same responsibility",
+        "smsCreator": "New structure",
+        "email": "Same responsibility",
+        "sms": "New structure",
+        "flow": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Defer product selection to subclasses",
+    "keyIdeas": [
+      "The creator owns a reusable workflow that calls its factory method.",
+      "A subclass chooses the concrete product behind a common capability."
+    ],
+    "distinction": "A central switch is a simple factory; an overridden creation step is the factory method shown here."
+  },
+  "abstract-factory": {
+    "scenario": "A page constructs buttons and checkboxes independently. Switching themes changes the button but leaves the checkbox light.",
+    "request": "Switch the entire control family to dark without mixing themes.",
+    "problem": "Independent product selection leaves compatibility to callers. Widget kinds and themes are tangled, producing mismatched combinations.",
+    "solution": "Define a factory interface with methods for buttons and checkboxes. Light and dark factories produce consistent families. The page depends only on factory and product interfaces; replacing the factory replaces the family.",
+    "benefits": [
+      "One factory keeps products within a consistent family.",
+      "The page does not depend on concrete themed products.",
+      "A new theme adds a factory while retaining the page workflow."
+    ],
+    "when": "Use it for multiple compatible product families that must switch together.",
+    "avoid": "For one product kind, a factory function or factory method is often enough. Frequently adding product kinds is awkward here.",
+    "tradeoff": "Adding a family is easy; adding a product kind changes the factory interface and every concrete factory.",
+    "remember": "Choose a factory once to obtain a compatible family.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Create widgets separately",
+        "title": "Create widgets separately",
+        "description": "A page constructs buttons and checkboxes independently. Switching themes changes the button but leaves the checkbox light.",
+        "insight": "Independent product selection leaves compatibility to callers. Widget kinds and themes are tangled, producing mismatched combinations.",
+        "action": "Switch the button to dark",
+        "graphNote": "Construct buttons and checkboxes separately.",
+        "codeNote": "Construct buttons and checkboxes separately."
+      },
+      {
+        "number": "02",
+        "label": "Themes become mixed",
+        "title": "Themes become mixed",
+        "description": "Switch the entire control family to dark without mixing themes.",
+        "insight": "Independent product selection leaves compatibility to callers. Widget kinds and themes are tangled, producing mismatched combinations.",
+        "action": "Introduce theme factories",
+        "graphNote": "Changing only the button produces a mixed family.",
+        "codeNote": "Changing only the button produces a mixed family."
+      },
+      {
+        "number": "03",
+        "label": "Create through a theme factory",
+        "title": "Create through a theme factory",
+        "description": "Define a factory interface with methods for buttons and checkboxes.",
+        "insight": "Define a factory interface with methods for buttons and checkboxes. Light and dark factories produce consistent families. The page depends only on factory and product interfaces; replacing the factory replaces the family.",
+        "action": "Switch to the dark family",
+        "graphNote": "The page obtains both products from one factory.",
+        "codeNote": "The page obtains both products from one factory."
+      },
+      {
+        "number": "04",
+        "label": "Replace the entire family",
+        "title": "Replace the entire family",
+        "description": "Choose a factory once to obtain a compatible family.",
+        "insight": "Adding a family is easy; adding a product kind changes the factory interface and every concrete factory.",
+        "action": "Start again",
+        "graphNote": "Replacing the factory switches both products to dark.",
+        "codeNote": "Replacing the factory switches both products to dark."
+      }
+    ],
+    "labels": {
+      "page": "Page",
+      "button": "Light button",
+      "check": "Light checkbox",
+      "darkButton": "Dark button",
+      "darkCheck": "Dark checkbox",
+      "factory": "Theme factory",
+      "light": "Light factory",
+      "dark": "Dark factory"
+    },
+    "annotations": [
+      {},
+      {
+        "page": "Same responsibility",
+        "darkButton": "Focus of this step",
+        "check": "Same responsibility"
+      },
+      {
+        "page": "Same responsibility",
+        "factory": "Focus of this step",
+        "light": "New structure",
+        "button": "New structure",
+        "check": "Same responsibility"
+      },
+      {
+        "page": "Same responsibility",
+        "factory": "Same responsibility",
+        "dark": "New structure",
+        "darkButton": "New structure",
+        "darkCheck": "New structure"
+      }
+    ],
+    "principleTitle": "One choice, one product family",
+    "keyIdeas": [
+      "Product kinds are button and checkbox; families are light and dark.",
+      "The factory supplies one consistent family rather than letting clients mix classes."
+    ],
+    "distinction": "Factory Method focuses on one creation step; Abstract Factory focuses on compatibility across multiple products."
+  },
+  "builder": {
+    "scenario": "Export jobs accept positional arguments for format, header, compression and attachments. Calls are difficult to read.",
+    "request": "Add a report preset and combine several optional settings.",
+    "problem": "Long constructors invite misplaced arguments. Copied setup sequences let defaults drift between callers.",
+    "solution": "Use a builder to configure format and header step by step, then build a separate result. An optional director encapsulates a report recipe. Copy configuration on build so later changes do not mutate earlier results.",
+    "benefits": [
+      "Named steps make construction intent explicit.",
+      "Recipes reuse a consistent setup sequence.",
+      "Construction is separated from the result, with one validation boundary."
+    ],
+    "when": "Use it for complex optional configuration or multiple representations from one construction sequence.",
+    "avoid": "Do not add a builder when a few named parameters already make the call clear.",
+    "tradeoff": "The mutable builder needs reuse and reset rules. Fluent chaining alone is not the pattern.",
+    "remember": "Turn an opaque constructor call into explicit construction steps.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Positional options are opaque",
+        "title": "Positional options are opaque",
+        "description": "Export jobs accept positional arguments for format, header, compression and attachments. Calls are difficult to read.",
+        "insight": "Long constructors invite misplaced arguments. Copied setup sequences let defaults drift between callers.",
+        "action": "Add a report preset",
+        "graphNote": "Option meaning depends on position.",
+        "codeNote": "Option meaning depends on position."
+      },
+      {
+        "number": "02",
+        "label": "A preset copies setup",
+        "title": "A preset copies setup",
+        "description": "Add a report preset and combine several optional settings.",
+        "insight": "Long constructors invite misplaced arguments. Copied setup sequences let defaults drift between callers.",
+        "action": "Extract building steps",
+        "graphNote": "The preset repeats format, header and compression choices.",
+        "codeNote": "The preset repeats format, header and compression choices."
+      },
+      {
+        "number": "03",
+        "label": "Build a separate result step by step",
+        "title": "Build a separate result step by step",
+        "description": "Use a builder to configure format and header step by step, then build a separate result.",
+        "insight": "Use a builder to configure format and header step by step, then build a separate result. An optional director encapsulates a report recipe. Copy configuration on build so later changes do not mutate earlier results.",
+        "action": "Reuse the report recipe",
+        "graphNote": "Named steps configure the builder; build returns a copy.",
+        "codeNote": "Named steps configure the builder; build returns a copy."
+      },
+      {
+        "number": "04",
+        "label": "A director reuses the recipe",
+        "title": "A director reuses the recipe",
+        "description": "Turn an opaque constructor call into explicit construction steps.",
+        "insight": "The mutable builder needs reuse and reset rules. Fluent chaining alone is not the pattern.",
+        "action": "Start again",
+        "graphNote": "A director reuses the recipe; later builder edits leave the earlier job intact.",
+        "codeNote": "A director reuses the recipe; later builder edits leave the earlier job intact."
+      }
+    ],
+    "labels": {
+      "caller": "Caller",
+      "args": "Positional options",
+      "export": "Export job",
+      "builder": "Export builder",
+      "director": "Report director",
+      "steps": "Configuration steps"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "args": "Focus of this step",
+        "steps": "New structure",
+        "export": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "builder": "Focus of this step",
+        "steps": "Same responsibility",
+        "export": "Same responsibility"
+      },
+      {
+        "director": "New structure",
+        "builder": "Same responsibility",
+        "caller": "Same responsibility",
+        "steps": "Same responsibility",
+        "export": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Configuration is not the final product",
+    "keyIdeas": [
+      "Building steps retain incomplete choices; build delivers the product.",
+      "A director is a recipe: it selects steps, while the builder executes and represents them."
+    ],
+    "distinction": "Abstract Factory creates a family; Builder assembles a complex product step by step. Returning this is only fluent syntax."
+  },
+  "prototype": {
+    "scenario": "An editor creates cards from an existing template with a title and a nested tag list.",
+    "request": "Edit the copy's tags without changing the template.",
+    "problem": "Assignment shares the entire reference. A shallow copy duplicates only the outer object, leaving nested tags shared.",
+    "solution": "Let the prototype expose clone, copying configuration and duplicating nested state that must be independent. Callers copy the prototype without reconstructing it. Real object graphs also require policies for cycles, resource handles and noncopyable state.",
+    "benefits": [
+      "Reuse a fully configured runtime template.",
+      "The object owns its copying policy.",
+      "Make independent versus shared state explicit."
+    ],
+    "when": "Use it when construction is complex or a runtime-configured object must be copied without knowing its concrete type.",
+    "avoid": "Avoid it for objects with noncopyable connections or threads, or when a simple constructor is clearer.",
+    "tradeoff": "Deep copying can be expensive. Identity, shared fields and cycles need an explicit policy.",
+    "remember": "Copy existing configuration, but separate the state that must be independent.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "A copy still shares tags",
+        "title": "A copy still shares tags",
+        "description": "An editor creates cards from an existing template with a title and a nested tag list.",
+        "insight": "Assignment shares the entire reference. A shallow copy duplicates only the outer object, leaving nested tags shared.",
+        "action": "Edit the copied card",
+        "graphNote": "Shallow copies still share the same tag list.",
+        "codeNote": "Shallow copies still share the same tag list."
+      },
+      {
+        "number": "02",
+        "label": "Editing the copy changes the template",
+        "title": "Editing the copy changes the template",
+        "description": "Edit the copy's tags without changing the template.",
+        "insight": "Assignment shares the entire reference. A shallow copy duplicates only the outer object, leaving nested tags shared.",
+        "action": "Implement clone",
+        "graphNote": "Editing the copy also adds new to the template.",
+        "codeNote": "Editing the copy also adds new to the template."
+      },
+      {
+        "number": "03",
+        "label": "The prototype owns cloning",
+        "title": "The prototype owns cloning",
+        "description": "Let the prototype expose clone, copying configuration and duplicating nested state that must be independent.",
+        "insight": "Let the prototype expose clone, copying configuration and duplicating nested state that must be independent. Callers copy the prototype without reconstructing it. Real object graphs also require policies for cycles, resource handles and noncopyable state.",
+        "action": "Verify independent nested state",
+        "graphNote": "clone creates an independent tag list.",
+        "codeNote": "clone creates an independent tag list."
+      },
+      {
+        "number": "04",
+        "label": "Edit the copy independently",
+        "title": "Edit the copy independently",
+        "description": "Copy existing configuration, but separate the state that must be independent.",
+        "insight": "Deep copying can be expensive. Identity, shared fields and cycles need an explicit policy.",
+        "action": "Start again",
+        "graphNote": "The copy gains new while the template retains only base.",
+        "codeNote": "The copy gains new while the template retains only base."
+      }
+    ],
+    "labels": {
+      "caller": "Editor",
+      "template": "Card template",
+      "copy": "Copied card",
+      "tags": "Shared tags",
+      "ownTags": "Independent tags",
+      "clone": "clone entry"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "copy": "Same responsibility",
+        "template": "Same responsibility",
+        "tags": "Focus of this step"
+      },
+      {
+        "caller": "Same responsibility",
+        "clone": "Focus of this step",
+        "template": "Same responsibility",
+        "copy": "Same responsibility",
+        "tags": "Same responsibility",
+        "ownTags": "New structure"
+      },
+      {
+        "caller": "Same responsibility",
+        "copy": "Same responsibility",
+        "template": "Same responsibility",
+        "tags": "Same responsibility",
+        "ownTags": "Focus of this step"
+      }
+    ],
+    "principleTitle": "Decide the copying boundary first",
+    "keyIdeas": [
+      "Reuse configuration while establishing a separate identity.",
+      "clone explicitly defines whether nested state is shared or independent."
+    ],
+    "distinction": "Singleton avoids duplicate instances; Prototype creates copies. Deep copying needs policies for resources and cycles."
+  }
+}

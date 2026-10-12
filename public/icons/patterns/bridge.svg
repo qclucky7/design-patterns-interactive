@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Abstraction and implementation vary independently</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M19 20V44M45 20V44M25 17H39" stroke="#315dce" /><rect x="9" y="9" width="16" height="16" fill="none" stroke="#191d22" /><rect x="9" y="43" width="16" height="16" fill="none" stroke="#191d22" /><rect x="39" y="9" width="16" height="16" fill="#315dce" /><rect x="39" y="43" width="16" height="16" fill="none" stroke="#315dce" />
+  </g>
+</svg>

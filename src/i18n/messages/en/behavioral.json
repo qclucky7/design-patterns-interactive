@@ -1,0 +1,907 @@
+{
+  "chain-of-responsibility": {
+    "scenario": "Support routes tickets by refund amount to an agent or supervisor.",
+    "request": "Escalate large tickets to a manager without changing existing handlers.",
+    "problem": "One routing function knows every level and changes whenever a handler is added.",
+    "solution": "Each handler handles a request or forwards it to the next. The caller knows only the head. This example stops at the first match and defines an unhandled result; all-handler middleware is a different chain policy.",
+    "benefits": [
+      "Insert a handler without editing existing classes.",
+      "Callers do not know the final receiver.",
+      "Configure chain order by policy."
+    ],
+    "when": "Use it when ordered candidates may handle a request.",
+    "avoid": "Avoid it for a fixed receiver or untestable implicit ordering.",
+    "tradeoff": "Requests may be unhandled; order matters. Prevent cycles and preserve tracing.",
+    "remember": "Handle it if able; otherwise pass it on.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "One function routes requests",
+        "title": "One function routes requests",
+        "description": "Support routes tickets by refund amount to an agent or supervisor.",
+        "insight": "One routing function knows every level and changes whenever a handler is added.",
+        "action": "Add a manager",
+        "graphNote": "The router knows every level.",
+        "codeNote": "The router knows every level."
+      },
+      {
+        "number": "02",
+        "label": "A large ticket adds a branch",
+        "title": "A large ticket adds a branch",
+        "description": "Escalate large tickets to a manager without changing existing handlers.",
+        "insight": "One routing function knows every level and changes whenever a handler is added.",
+        "action": "Build the handler chain",
+        "graphNote": "The manager level changes the central branch.",
+        "codeNote": "The manager level changes the central branch."
+      },
+      {
+        "number": "03",
+        "label": "Link individual handlers",
+        "title": "Link individual handlers",
+        "description": "Each handler handles a request or forwards it to the next.",
+        "insight": "Each handler handles a request or forwards it to the next. The caller knows only the head. This example stops at the first match and defines an unhandled result; all-handler middleware is a different chain policy.",
+        "action": "Submit a large ticket",
+        "graphNote": "A ticket passes from the agent to the supervisor.",
+        "codeNote": "A ticket passes from the agent to the supervisor."
+      },
+      {
+        "number": "04",
+        "label": "A manager handles escalation",
+        "title": "A manager handles escalation",
+        "description": "Handle it if able; otherwise pass it on.",
+        "insight": "Requests may be unhandled; order matters. Prevent cycles and preserve tracing.",
+        "action": "Start again",
+        "graphNote": "Add the manager at the tail to handle an escalated ticket.",
+        "codeNote": "Add the manager at the tail to handle an escalated ticket."
+      }
+    ],
+    "labels": {
+      "request": "Ticket",
+      "route": "Central router",
+      "agent": "Agent · ≤100",
+      "supervisor": "Supervisor · ≤1000",
+      "manager": "Manager · ≤5000"
+    },
+    "annotations": [
+      {},
+      {
+        "request": "Same responsibility",
+        "route": "Focus of this step",
+        "agent": "Same responsibility",
+        "supervisor": "Same responsibility",
+        "manager": "New structure"
+      },
+      {
+        "request": "Same responsibility",
+        "agent": "Focus of this step",
+        "supervisor": "Same responsibility"
+      },
+      {
+        "request": "Same responsibility",
+        "agent": "Same responsibility",
+        "supervisor": "Same responsibility",
+        "manager": "Focus of this step"
+      }
+    ],
+    "principleTitle": "Move handling responsibility along a chain",
+    "keyIdeas": [
+      "The chain head need not know the eventual capable receiver.",
+      "Each station chooses handle or forward, and the chain end has a defined outcome."
+    ],
+    "distinction": "This chain stops at the first match; middleware chains that continue through every layer use a different stopping policy."
+  },
+  "command": {
+    "scenario": "A toolbar edits text directly without retaining an undoable action.",
+    "request": "Undo an inserted piece of text.",
+    "problem": "Buttons are coupled to editing behavior, and undo needs a record of the previous state.",
+    "solution": "Encapsulate insertion in a command holding its receiver, arguments and prior state. An invoker executes it and retains history for undo. The command represents a request; the editor performs the work.",
+    "benefits": [
+      "Decouple controls from receivers.",
+      "Queue, record or compose requests.",
+      "Each action owns its undo information."
+    ],
+    "when": "Use it for undo, histories, deferred work or queues.",
+    "avoid": "Use a function for a simple immediate call without a request lifecycle.",
+    "tradeoff": "History costs memory. External side effects may need compensation rather than true reversal.",
+    "remember": "Retain what to do as an object, then decide when to execute or undo it.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "A button edits text directly",
+        "title": "A button edits text directly",
+        "description": "A toolbar edits text directly without retaining an undoable action.",
+        "insight": "Buttons are coupled to editing behavior, and undo needs a record of the previous state.",
+        "action": "Try undoing an edit",
+        "graphNote": "Direct insertion changes text to AB.",
+        "codeNote": "Direct insertion changes text to AB."
+      },
+      {
+        "number": "02",
+        "label": "Undo needs a prior state",
+        "title": "Undo needs a prior state",
+        "description": "Undo an inserted piece of text.",
+        "insight": "Buttons are coupled to editing behavior, and undo needs a record of the previous state.",
+        "action": "Create an insertion command",
+        "graphNote": "A retained previous value enables restoring A.",
+        "codeNote": "A retained previous value enables restoring A."
+      },
+      {
+        "number": "03",
+        "label": "Encapsulate insertion as a command",
+        "title": "Encapsulate insertion as a command",
+        "description": "Encapsulate insertion in a command holding its receiver, arguments and prior state.",
+        "insight": "Encapsulate insertion in a command holding its receiver, arguments and prior state. An invoker executes it and retains history for undo. The command represents a request; the editor performs the work.",
+        "action": "Execute and undo",
+        "graphNote": "The insertion command retains arguments, receiver and undo state.",
+        "codeNote": "The insertion command retains arguments, receiver and undo state."
+      },
+      {
+        "number": "04",
+        "label": "Execute and undo",
+        "title": "Execute and undo",
+        "description": "Retain what to do as an object, then decide when to execute or undo it.",
+        "insight": "History costs memory. External side effects may need compensation rather than true reversal.",
+        "action": "Start again",
+        "graphNote": "History invokes undo and restores AB to A.",
+        "codeNote": "History invokes undo and restores AB to A."
+      }
+    ],
+    "labels": {
+      "button": "Toolbar",
+      "editor": "Editor",
+      "history": "History",
+      "command": "Insert command",
+      "undo": "undo"
+    },
+    "annotations": [
+      {},
+      {
+        "button": "Same responsibility",
+        "editor": "Same responsibility",
+        "history": "Focus of this step"
+      },
+      {
+        "button": "Same responsibility",
+        "command": "Focus of this step",
+        "editor": "Same responsibility",
+        "history": "Same responsibility"
+      },
+      {
+        "history": "Same responsibility",
+        "command": "Same responsibility",
+        "undo": "Focus of this step",
+        "editor": "Same responsibility"
+      }
+    ],
+    "principleTitle": "A request has its own lifecycle",
+    "keyIdeas": [
+      "Arguments, receiver and undo data travel with the command.",
+      "The invoker retains history; the receiver performs business work."
+    ],
+    "distinction": "Command stores an action; Memento stores state at a moment. They can cooperate but are not the same concept."
+  },
+  "interpreter": {
+    "scenario": "A rule engine checks age over 18 and later needs to combine that with membership.",
+    "request": "Represent age > 18 AND member as independently evaluated expressions.",
+    "problem": "Ad hoc string handling tangles grammar with evaluation. Evaluating arbitrary code is unsafe.",
+    "solution": "Represent grammar with expression objects. Terminals read context; nonterminals combine child expressions through interpret(context). This example constructs an AST directly, not a complete parser.",
+    "benefits": [
+      "Make grammar explicit without executing arbitrary code.",
+      "Test expression nodes independently.",
+      "Extend a small grammar through composition."
+    ],
+    "when": "Use it for a small, stable rule language.",
+    "avoid": "Use maintained parsers, compilers or rule engines for complex or performance-critical languages.",
+    "tradeoff": "Grammar classes proliferate, and parsing, diagnostics and safety limits still need implementation.",
+    "remember": "Turn a rule into a recursively evaluated expression tree.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Evaluate an age rule directly",
+        "title": "Evaluate an age rule directly",
+        "description": "A rule engine checks age over 18 and later needs to combine that with membership.",
+        "insight": "Ad hoc string handling tangles grammar with evaluation. Evaluating arbitrary code is unsafe.",
+        "action": "Add membership",
+        "graphNote": "The age rule reads context directly.",
+        "codeNote": "The age rule reads context directly."
+      },
+      {
+        "number": "02",
+        "label": "Hard-code a combined rule",
+        "title": "Hard-code a combined rule",
+        "description": "Represent age > 18 AND member as independently evaluated expressions.",
+        "insight": "Ad hoc string handling tangles grammar with evaluation. Evaluating arbitrary code is unsafe.",
+        "action": "Create expressions",
+        "graphNote": "Membership enters the same hard-coded condition.",
+        "codeNote": "Membership enters the same hard-coded condition."
+      },
+      {
+        "number": "03",
+        "label": "Terminals read context",
+        "title": "Terminals read context",
+        "description": "Represent grammar with expression objects.",
+        "insight": "Represent grammar with expression objects. Terminals read context; nonterminals combine child expressions through interpret(context). This example constructs an AST directly, not a complete parser.",
+        "action": "Compose AND",
+        "graphNote": "Wrap the age rule in an expression.",
+        "codeNote": "Wrap the age rule in an expression."
+      },
+      {
+        "number": "04",
+        "label": "AND interprets child expressions",
+        "title": "AND interprets child expressions",
+        "description": "Turn a rule into a recursively evaluated expression tree.",
+        "insight": "Grammar classes proliferate, and parsing, diagnostics and safety limits still need implementation.",
+        "action": "Start again",
+        "graphNote": "AND composes age and member expressions against one context.",
+        "codeNote": "AND composes age and member expressions against one context."
+      }
+    ],
+    "labels": {
+      "context": "Context",
+      "age": "Age >18",
+      "member": "Member",
+      "and": "AND expression",
+      "result": "Result"
+    },
+    "annotations": [
+      {},
+      {
+        "context": "Same responsibility",
+        "and": "Focus of this step",
+        "result": "Same responsibility"
+      },
+      {
+        "context": "Same responsibility",
+        "age": "Focus of this step",
+        "result": "Same responsibility"
+      },
+      {
+        "and": "Focus of this step",
+        "age": "Same responsibility",
+        "member": "New structure",
+        "context": "Same responsibility",
+        "result": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Make grammar an evaluable object structure",
+    "keyIdeas": [
+      "Terminals obtain values from context; nonterminals combine expressions.",
+      "Evaluation follows the AST instead of executing arbitrary string code."
+    ],
+    "distinction": "A parser turns text into an AST; an interpreter evaluates it. This example demonstrates evaluation only."
+  },
+  "iterator": {
+    "scenario": "A playlist stores songs in an array and callers access its indices.",
+    "request": "Offer forward and reverse traversal without exposing the array.",
+    "problem": "Callers depend on storage layout, so changing representation or order changes their loops.",
+    "solution": "Let the collection return an iterator that owns a cursor and implements next. Use the language's iterator protocol. Forward and reverse iterators share the collection but maintain independent traversal state.",
+    "benefits": [
+      "Hide the collection layout.",
+      "Independent iterators allow concurrent traversals.",
+      "Separate traversal order from storage."
+    ],
+    "when": "Use it for multiple traversals or hidden collection storage.",
+    "avoid": "Use built-in collection iterators when they already meet the need.",
+    "tradeoff": "Define mutation behavior during iteration; this example uses a sequence snapshot.",
+    "remember": "The collection owns data; the iterator owns where traversal has reached.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Read internal indices",
+        "title": "Read internal indices",
+        "description": "A playlist stores songs in an array and callers access its indices.",
+        "insight": "Callers depend on storage layout, so changing representation or order changes their loops.",
+        "action": "Add reverse traversal",
+        "graphNote": "The caller traverses array indices forward.",
+        "codeNote": "The caller traverses array indices forward."
+      },
+      {
+        "number": "02",
+        "label": "Reverse loops depend on storage",
+        "title": "Reverse loops depend on storage",
+        "description": "Offer forward and reverse traversal without exposing the array.",
+        "insight": "Callers depend on storage layout, so changing representation or order changes their loops.",
+        "action": "Hide index access",
+        "graphNote": "Reverse access adds another index loop to the caller.",
+        "codeNote": "Reverse access adds another index loop to the caller."
+      },
+      {
+        "number": "03",
+        "label": "Use the native iterator protocol",
+        "title": "Use the native iterator protocol",
+        "description": "Let the collection return an iterator that owns a cursor and implements next.",
+        "insight": "Let the collection return an iterator that owns a cursor and implements next. Use the language's iterator protocol. Forward and reverse iterators share the collection but maintain independent traversal state.",
+        "action": "Use a reverse iterator",
+        "graphNote": "The collection exposes iteration rather than its array.",
+        "codeNote": "The collection exposes iteration rather than its array."
+      },
+      {
+        "number": "04",
+        "label": "Switch traversal, not the caller",
+        "title": "Switch traversal, not the caller",
+        "description": "The collection owns data; the iterator owns where traversal has reached.",
+        "insight": "Define mutation behavior during iteration; this example uses a sequence snapshot.",
+        "action": "Start again",
+        "graphNote": "The reverse iterator yields C,B,A through the same protocol.",
+        "codeNote": "The reverse iterator yields C,B,A through the same protocol."
+      }
+    ],
+    "labels": {
+      "caller": "Player",
+      "list": "Playlist",
+      "index": "Internal indices",
+      "iter": "Forward iterator",
+      "reverse": "Reverse iterator",
+      "songs": "Songs"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "index": "Focus of this step",
+        "songs": "New structure"
+      },
+      {
+        "caller": "Same responsibility",
+        "iter": "Focus of this step",
+        "list": "New structure",
+        "songs": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "reverse": "Focus of this step",
+        "list": "Same responsibility",
+        "songs": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Separate data ownership from traversal position",
+    "keyIdeas": [
+      "The collection owns elements; the iterator owns cursor and ordering.",
+      "One collection can have multiple independent traversals."
+    ],
+    "distinction": "The iterator protocol does not determine whether mutations produce a live view, snapshot or error."
+  },
+  "mediator": {
+    "scenario": "A search box updates results directly, while a clear button accesses both the box and results.",
+    "request": "Coordinate search and clear without direct widget references.",
+    "problem": "Widgets know each other, so new interaction rules require edits across components.",
+    "solution": "Widgets report events to a mediator. The mediator knows coordination rules and updates the appropriate widgets; widgets no longer control each other.",
+    "benefits": [
+      "Reduce direct widget dependencies.",
+      "Centralize the effect of an interaction.",
+      "Reuse widgets in other coordination contexts."
+    ],
+    "when": "Use it for dense interactions governed by a shared workflow.",
+    "avoid": "Skip it for a simple one-way dependency and avoid one application-wide god mediator.",
+    "tradeoff": "Mediators can grow large; split them by collaboration scope.",
+    "remember": "Components report events; the mediator coordinates responses.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Widgets call one another",
+        "title": "Widgets call one another",
+        "description": "A search box updates results directly, while a clear button accesses both the box and results.",
+        "insight": "Widgets know each other, so new interaction rules require edits across components.",
+        "action": "Add a clear action",
+        "graphNote": "Search directly changes the results component.",
+        "codeNote": "Search directly changes the results component."
+      },
+      {
+        "number": "02",
+        "label": "Clear adds cross-widget dependencies",
+        "title": "Clear adds cross-widget dependencies",
+        "description": "Coordinate search and clear without direct widget references.",
+        "insight": "Widgets know each other, so new interaction rules require edits across components.",
+        "action": "Introduce a search mediator",
+        "graphNote": "Clear directly accesses both components.",
+        "codeNote": "Clear directly accesses both components."
+      },
+      {
+        "number": "03",
+        "label": "Report events to a mediator",
+        "title": "Report events to a mediator",
+        "description": "Widgets report events to a mediator.",
+        "insight": "Widgets report events to a mediator. The mediator knows coordination rules and updates the appropriate widgets; widgets no longer control each other.",
+        "action": "Coordinate clear",
+        "graphNote": "Widgets report events and the mediator coordinates updates.",
+        "codeNote": "Widgets report events and the mediator coordinates updates."
+      },
+      {
+        "number": "04",
+        "label": "Coordinate clear centrally",
+        "title": "Coordinate clear centrally",
+        "description": "Components report events; the mediator coordinates responses.",
+        "insight": "Mediators can grow large; split them by collaboration scope.",
+        "action": "Start again",
+        "graphNote": "The mediator handles clear and results become empty.",
+        "codeNote": "The mediator handles clear and results become empty."
+      }
+    ],
+    "labels": {
+      "search": "Search box",
+      "results": "Results",
+      "clear": "Clear button",
+      "mediator": "Search mediator"
+    },
+    "annotations": [
+      {},
+      {
+        "search": "Same responsibility",
+        "results": "Same responsibility",
+        "clear": "Focus of this step"
+      },
+      {
+        "search": "Same responsibility",
+        "mediator": "Focus of this step",
+        "results": "Same responsibility"
+      },
+      {
+        "clear": "New structure",
+        "mediator": "Focus of this step",
+        "search": "Same responsibility",
+        "results": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Coordination belongs to the collaboration",
+    "keyIdeas": [
+      "Widgets report events rather than commanding each other.",
+      "The mediator owns rules within a collaboration scope and reduces mesh dependencies."
+    ],
+    "distinction": "Observer broadcasts changes; Mediator coordinates objects according to collaboration rules. They can work together."
+  },
+  "memento": {
+    "scenario": "An editor holds text and selection, and an external history wants undo snapshots.",
+    "request": "Save, keep editing, then restore both text and selection.",
+    "problem": "Copying private fields exposes internals and makes history depend on the editor's layout.",
+    "solution": "The editor creates and restores an immutable snapshot; history only retains it. Memento stores state rather than actions. TypeScript hides state in a closure; Python uses a frozen value with an opaque-state convention.",
+    "benefits": [
+      "History does not depend on editor fields.",
+      "The state owner performs restoration.",
+      "Retain snapshots from multiple moments."
+    ],
+    "when": "Use it to restore state without exposing internal representation.",
+    "avoid": "For huge or noncopyable state, consider incremental logs or persistent structures.",
+    "tradeoff": "Snapshots cost memory and need version and restore-access policies.",
+    "remember": "The object packages and restores its state; history only keeps it.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "History reads private state",
+        "title": "History reads private state",
+        "description": "An editor holds text and selection, and an external history wants undo snapshots.",
+        "insight": "Copying private fields exposes internals and makes history depend on the editor's layout.",
+        "action": "Save and edit",
+        "graphNote": "External history depends on editor fields.",
+        "codeNote": "External history depends on editor fields."
+      },
+      {
+        "number": "02",
+        "label": "Restoration depends on field layout",
+        "title": "Restoration depends on field layout",
+        "description": "Save, keep editing, then restore both text and selection.",
+        "insight": "Copying private fields exposes internals and makes history depend on the editor's layout.",
+        "action": "Create a memento",
+        "graphNote": "External code manually copies fields to save and restore.",
+        "codeNote": "External code manually copies fields to save and restore."
+      },
+      {
+        "number": "03",
+        "label": "Editor creates an opaque snapshot",
+        "title": "Editor creates an opaque snapshot",
+        "description": "The editor creates and restores an immutable snapshot; history only retains it.",
+        "insight": "The editor creates and restores an immutable snapshot; history only retains it. Memento stores state rather than actions. TypeScript hides state in a closure; Python uses a frozen value with an opaque-state convention.",
+        "action": "Restore prior state",
+        "graphNote": "The editor creates a snapshot, then edits to ABC:3.",
+        "codeNote": "The editor creates a snapshot, then edits to ABC:3."
+      },
+      {
+        "number": "04",
+        "label": "Return the snapshot to restore",
+        "title": "Return the snapshot to restore",
+        "description": "The object packages and restores its state; history only keeps it.",
+        "insight": "Snapshots cost memory and need version and restore-access policies.",
+        "action": "Start again",
+        "graphNote": "Restoring the snapshot returns both text and cursor to A:1.",
+        "codeNote": "Restoring the snapshot returns both text and cursor to A:1."
+      }
+    ],
+    "labels": {
+      "editor": "Editor",
+      "history": "History",
+      "fields": "Internal fields",
+      "snapshot": "Immutable snapshot",
+      "restore": "Restore entry"
+    },
+    "annotations": [
+      {},
+      {
+        "history": "Same responsibility",
+        "fields": "Focus of this step",
+        "editor": "Same responsibility"
+      },
+      {
+        "editor": "Same responsibility",
+        "snapshot": "Focus of this step",
+        "history": "Same responsibility"
+      },
+      {
+        "history": "Same responsibility",
+        "snapshot": "Same responsibility",
+        "restore": "Focus of this step",
+        "editor": "Same responsibility"
+      }
+    ],
+    "principleTitle": "The state owner saves and restores",
+    "keyIdeas": [
+      "External history retains snapshots without interpreting private fields.",
+      "Restoration should recover consistent related state, not only one field."
+    ],
+    "distinction": "Memento records state rather than actions. Full snapshots may be unsuitable for large states and deep histories."
+  },
+  "observer": {
+    "scenario": "An inventory service directly refreshes a display when stock changes.",
+    "request": "Notify email alerts and the display, with unsubscribe support.",
+    "problem": "The publisher knows each consumer, so additions and removals change publishing logic.",
+    "solution": "A publisher retains callbacks and notifies a snapshot after state changes. Consumers subscribe and unsubscribe themselves. This example is synchronous in-process notification, not a durable queue.",
+    "benefits": [
+      "The publisher is independent of concrete consumers.",
+      "Change subscriptions dynamically.",
+      "One event triggers independent responses."
+    ],
+    "when": "Use it when one object's changes should notify multiple dynamically registered consumers.",
+    "avoid": "Use mature messaging infrastructure for durable delivery, retries or cross-process events.",
+    "tradeoff": "Manage unsubscribe, failures, notification loops and ordering; this example does not guarantee reliable delivery.",
+    "remember": "Subscribe to changes without making the publisher know every consumer.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Stock calls the display",
+        "title": "Stock calls the display",
+        "description": "An inventory service directly refreshes a display when stock changes.",
+        "insight": "The publisher knows each consumer, so additions and removals change publishing logic.",
+        "action": "Add an email alert",
+        "graphNote": "Stock calls the display directly.",
+        "codeNote": "Stock calls the display directly."
+      },
+      {
+        "number": "02",
+        "label": "Consumers enter publisher logic",
+        "title": "Consumers enter publisher logic",
+        "description": "Notify email alerts and the display, with unsubscribe support.",
+        "insight": "The publisher knows each consumer, so additions and removals change publishing logic.",
+        "action": "Create subscriptions",
+        "graphNote": "An email consumer enters publishing logic.",
+        "codeNote": "An email consumer enters publishing logic."
+      },
+      {
+        "number": "03",
+        "label": "Consumers register callbacks",
+        "title": "Consumers register callbacks",
+        "description": "A publisher retains callbacks and notifies a snapshot after state changes.",
+        "insight": "A publisher retains callbacks and notifies a snapshot after state changes. Consumers subscribe and unsubscribe themselves. This example is synchronous in-process notification, not a durable queue.",
+        "action": "Unsubscribe the display",
+        "graphNote": "Display and email register callbacks.",
+        "codeNote": "Display and email register callbacks."
+      },
+      {
+        "number": "04",
+        "label": "Notify remaining subscribers",
+        "title": "Notify remaining subscribers",
+        "description": "Subscribe to changes without making the publisher know every consumer.",
+        "insight": "Manage unsubscribe, failures, notification loops and ordering; this example does not guarantee reliable delivery.",
+        "action": "Start again",
+        "graphNote": "After display unsubscribes, only email receives the update.",
+        "codeNote": "After display unsubscribes, only email receives the update."
+      }
+    ],
+    "labels": {
+      "stock": "Stock publisher",
+      "display": "Display",
+      "email": "Email alert",
+      "subs": "Subscriptions"
+    },
+    "annotations": [
+      {},
+      {
+        "stock": "Focus of this step",
+        "display": "Same responsibility",
+        "email": "New structure"
+      },
+      {
+        "display": "Same responsibility",
+        "subs": "Focus of this step",
+        "email": "Same responsibility",
+        "stock": "Same responsibility"
+      },
+      {
+        "stock": "Same responsibility",
+        "subs": "Focus of this step",
+        "email": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Connect changes to responses through subscriptions",
+    "keyIdeas": [
+      "The publisher maintains subscriptions, not consumer types.",
+      "Unsubscription is essential lifecycle management."
+    ],
+    "distinction": "A synchronous in-process observer lacks queue durability, retries and delivery guarantees. Use infrastructure when those are required."
+  },
+  "state": {
+    "scenario": "A player interprets the same click differently when stopped or playing.",
+    "request": "Add a paused state and resume on click.",
+    "problem": "State branches accumulate in the player and affect more operations as states grow.",
+    "solution": "The player delegates to its current state object. Stopped, Playing and Paused define click and transition the context according to business rules. State includes transitions, not just interchangeable algorithms.",
+    "benefits": [
+      "Keep each state's behavior together.",
+      "Remove accumulating state branches from the context.",
+      "Make transitions explicit and testable."
+    ],
+    "when": "Use it when behavior depends on state and the state/operation set is growing.",
+    "avoid": "For a few stable states, an enum and switch may be clearer. Use a maintained state-machine library for complex workflows.",
+    "tradeoff": "More classes can scatter transitions. Define illegal transitions and concurrency policies.",
+    "remember": "The current state determines an action's meaning and the next state.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Branch on a state string",
+        "title": "Branch on a state string",
+        "description": "A player interprets the same click differently when stopped or playing.",
+        "insight": "State branches accumulate in the player and affect more operations as states grow.",
+        "action": "Add pause",
+        "graphNote": "One branch switches stopped and playing.",
+        "codeNote": "One branch switches stopped and playing."
+      },
+      {
+        "number": "02",
+        "label": "Pause adds more branches",
+        "title": "Pause adds more branches",
+        "description": "Add a paused state and resume on click.",
+        "insight": "State branches accumulate in the player and affect more operations as states grow.",
+        "action": "Extract state objects",
+        "graphNote": "Pause adds behavior to the central branch.",
+        "codeNote": "Pause adds behavior to the central branch."
+      },
+      {
+        "number": "03",
+        "label": "Delegate to a state object",
+        "title": "Delegate to a state object",
+        "description": "The player delegates to its current state object.",
+        "insight": "The player delegates to its current state object. Stopped, Playing and Paused define click and transition the context according to business rules. State includes transitions, not just interchangeable algorithms.",
+        "action": "Pause and resume",
+        "graphNote": "The player delegates to its state; stopped starts playback.",
+        "codeNote": "The player delegates to its state; stopped starts playback."
+      },
+      {
+        "number": "04",
+        "label": "Paused state handles resume",
+        "title": "Paused state handles resume",
+        "description": "The current state determines an action's meaning and the next state.",
+        "insight": "More classes can scatter transitions. Define illegal transitions and concurrency policies.",
+        "action": "Start again",
+        "graphNote": "Playing transitions to paused, then another click resumes playback.",
+        "codeNote": "Playing transitions to paused, then another click resumes playback."
+      }
+    ],
+    "labels": {
+      "player": "Player context",
+      "branch": "State branches",
+      "stopped": "Stopped",
+      "playing": "Playing",
+      "paused": "Paused"
+    },
+    "annotations": [
+      {},
+      {
+        "player": "Same responsibility",
+        "branch": "Focus of this step",
+        "stopped": "Same responsibility",
+        "playing": "Same responsibility",
+        "paused": "New structure"
+      },
+      {
+        "player": "Same responsibility",
+        "stopped": "Focus of this step",
+        "playing": "Same responsibility"
+      },
+      {
+        "player": "Same responsibility",
+        "paused": "Focus of this step",
+        "playing": "Same responsibility"
+      }
+    ],
+    "principleTitle": "The state determines an action's meaning",
+    "keyIdeas": [
+      "The same click means different things when stopped, playing or paused.",
+      "States drive transitions, and valid paths are business rules."
+    ],
+    "distinction": "Strategy is an algorithm choice; State follows an object's lifecycle and transition rules."
+  },
+  "template-method": {
+    "scenario": "CSV and JSON imports duplicate read, transform and save steps.",
+    "request": "Keep read and save fixed while changing format-specific transformation.",
+    "problem": "Copied workflows drift in ordering and shared behavior.",
+    "solution": "A base importData fixes the read-transform-save skeleton and invokes an abstract transformation step. CSV and JSON subclasses implement that step. The example follows this convention without language-enforced final methods.",
+    "benefits": [
+      "Write the common workflow once.",
+      "The skeleton controls ordering.",
+      "Subclasses implement only variation points."
+    ],
+    "when": "Use it for similar workflows with a few varying steps and a natural inheritance relationship.",
+    "avoid": "Prefer composition or strategy for freely interchangeable runtime behaviors.",
+    "tradeoff": "Subclasses depend on the base workflow contract; too many hooks obscure it.",
+    "remember": "The base owns the skeleton; subclasses supply the varying steps.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Formats duplicate the import workflow",
+        "title": "Formats duplicate the import workflow",
+        "description": "CSV and JSON imports duplicate read, transform and save steps.",
+        "insight": "Copied workflows drift in ordering and shared behavior.",
+        "action": "Add JSON import",
+        "graphNote": "The CSV function owns the whole workflow.",
+        "codeNote": "The CSV function owns the whole workflow."
+      },
+      {
+        "number": "02",
+        "label": "JSON copies the same steps",
+        "title": "JSON copies the same steps",
+        "description": "Keep read and save fixed while changing format-specific transformation.",
+        "insight": "Copied workflows drift in ordering and shared behavior.",
+        "action": "Extract the workflow skeleton",
+        "graphNote": "The JSON function repeats read and save.",
+        "codeNote": "The JSON function repeats read and save."
+      },
+      {
+        "number": "03",
+        "label": "The base fixes the skeleton",
+        "title": "The base fixes the skeleton",
+        "description": "A base importData fixes the read-transform-save skeleton and invokes an abstract transformation step.",
+        "insight": "A base importData fixes the read-transform-save skeleton and invokes an abstract transformation step. CSV and JSON subclasses implement that step. The example follows this convention without language-enforced final methods.",
+        "action": "Run the JSON subclass",
+        "graphNote": "The base retains read and save; subclasses define transform.",
+        "codeNote": "The base retains read and save; subclasses define transform."
+      },
+      {
+        "number": "04",
+        "label": "Subclasses replace transformation",
+        "title": "Subclasses replace transformation",
+        "description": "The base owns the skeleton; subclasses supply the varying steps.",
+        "insight": "Subclasses depend on the base workflow contract; too many hooks obscure it.",
+        "action": "Start again",
+        "graphNote": "The JSON subclass follows the same skeleton and yields saved:A|B.",
+        "codeNote": "The JSON subclass follows the same skeleton and yields saved:A|B."
+      }
+    ],
+    "labels": {
+      "csv": "CSV import",
+      "json": "JSON import",
+      "read": "Read",
+      "convert": "Transform step",
+      "save": "Save",
+      "base": "Import skeleton"
+    },
+    "annotations": [
+      {},
+      {
+        "csv": "Same responsibility",
+        "read": "Same responsibility",
+        "json": "Focus of this step",
+        "convert": "Same responsibility",
+        "save": "Same responsibility"
+      },
+      {
+        "base": "Focus of this step",
+        "read": "Same responsibility",
+        "convert": "Same responsibility",
+        "save": "Same responsibility",
+        "csv": "Same responsibility"
+      },
+      {
+        "base": "Same responsibility",
+        "read": "Same responsibility",
+        "convert": "Focus of this step",
+        "save": "Same responsibility",
+        "json": "New structure"
+      }
+    ],
+    "principleTitle": "Keep the order, expose the varying steps",
+    "keyIdeas": [
+      "The skeleton first fixes read, transform and save ordering.",
+      "Abstract steps and hooks expose local variation without copying the whole workflow."
+    ],
+    "distinction": "Template Method overrides steps through inheritance; Strategy replaces algorithms through composition at runtime."
+  },
+  "visitor": {
+    "scenario": "A filesystem contains files and folders. It needs size calculation and later a name export.",
+    "request": "Add export without adding another method to every node class.",
+    "problem": "Every new operation edits all element classes, mixing structure with unrelated algorithms.",
+    "solution": "Elements accept a visitor and invoke visitFile or visitFolder with themselves. The visitor implements type-specific operations through double dispatch and owns folder recursion. New operations add visitors; new element types change every visitor.",
+    "benefits": [
+      "Keep an operation together in one visitor.",
+      "Add operations to a stable element structure.",
+      "Dispatch by element type without caller-side type checks."
+    ],
+    "when": "Use it when element types are stable and operations keep growing.",
+    "avoid": "Avoid it when element types grow frequently; pattern matching may be clearer in some languages.",
+    "tradeoff": "Visitors know every element type and may need access to element state.",
+    "remember": "Bring a new operation to the structure rather than adding it to every element.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Nodes own size calculation",
+        "title": "Nodes own size calculation",
+        "description": "A filesystem contains files and folders. It needs size calculation and later a name export.",
+        "insight": "Every new operation edits all element classes, mixing structure with unrelated algorithms.",
+        "action": "Add name export",
+        "graphNote": "Files and folders define size themselves.",
+        "codeNote": "Files and folders define size themselves."
+      },
+      {
+        "number": "02",
+        "label": "Export enters each element class",
+        "title": "Export enters each element class",
+        "description": "Add export without adding another method to every node class.",
+        "insight": "Every new operation edits all element classes, mixing structure with unrelated algorithms.",
+        "action": "Introduce accept and visitors",
+        "graphNote": "Name export edits every element class again.",
+        "codeNote": "Name export edits every element class again."
+      },
+      {
+        "number": "03",
+        "label": "accept dispatches to a size visitor",
+        "title": "accept dispatches to a size visitor",
+        "description": "Elements accept a visitor and invoke visitFile or visitFolder with themselves.",
+        "insight": "Elements accept a visitor and invoke visitFile or visitFolder with themselves. The visitor implements type-specific operations through double dispatch and owns folder recursion. New operations add visitors; new element types change every visitor.",
+        "action": "Use an export visitor",
+        "graphNote": "accept dispatches to the right method and the size is 10.",
+        "codeNote": "accept dispatches to the right method and the size is 10."
+      },
+      {
+        "number": "04",
+        "label": "Add a name-export visitor",
+        "title": "Add a name-export visitor",
+        "description": "Bring a new operation to the structure rather than adding it to every element.",
+        "insight": "Visitors know every element type and may need access to element state.",
+        "action": "Start again",
+        "graphNote": "A new visitor exports notes without editing element classes.",
+        "codeNote": "A new visitor exports notes without editing element classes."
+      }
+    ],
+    "labels": {
+      "caller": "Caller",
+      "file": "File",
+      "folder": "Folder",
+      "size": "Size visitor",
+      "export": "Name visitor",
+      "accept": "accept dispatch"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "folder": "Focus of this step",
+        "file": "Focus of this step"
+      },
+      {
+        "caller": "Same responsibility",
+        "size": "New structure",
+        "folder": "Same responsibility",
+        "accept": "Focus of this step",
+        "file": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "export": "Focus of this step",
+        "folder": "Same responsibility",
+        "accept": "Same responsibility",
+        "file": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Stable element types, growing operations",
+    "keyIdeas": [
+      "accept selects visitFile or visitFolder, and the visitor supplies the behavior.",
+      "A new operation adds a visitor; a new element type changes every visitor."
+    ],
+    "distinction": "Double dispatch separates operations from structure, not merely traversal. Elements or visitors must still own traversal order."
+  }
+}

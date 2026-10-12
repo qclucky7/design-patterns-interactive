@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>An external operation visits different object types</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M16 22V44M23 16H42M36 11L42 16L36 21" stroke="#315dce" /><path d="M23 48H42" stroke="#315dce" stroke-dasharray="3 4" /><rect x="8" y="8" width="16" height="16" fill="#315dce" /><rect x="8" y="40" width="16" height="16" fill="none" stroke="#315dce" /><rect x="42" y="8" width="16" height="16" fill="none" stroke="#191d22" /><rect x="42" y="40" width="16" height="16" fill="#191d22" />
+  </g>
+</svg>

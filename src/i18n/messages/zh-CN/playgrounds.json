@@ -1,0 +1,383 @@
+{
+  "walkthrough": "对照结构演变与完整代码",
+  "reset": "重置演示",
+  "patterns": {
+    "singleton": {
+      "title": "是不是同一个对象？",
+      "instruction": "分别获取购物车与后台任务的配置仓库，再修改共享开关。",
+      "controls": {
+        "cart": "购物车获取实例",
+        "job": "后台获取实例",
+        "toggle": "切换促销开关"
+      },
+      "labels": {
+        "cart": "购物车引用",
+        "job": "后台任务引用",
+        "instance": "唯一实例",
+        "flag": "促销开关",
+        "waiting": "尚未获取",
+        "on": "开启",
+        "off": "关闭",
+        "same": "两个引用指向同一个对象"
+      },
+      "explanation": "获取次数增加，实例仍只有一个，两个入口读取同一份状态。"
+    },
+    "factory-method": {
+      "title": "换产品，不换通知流程",
+      "instruction": "选择创建者并发送消息，观察哪一步随渠道改变。",
+      "controls": {
+        "email": "邮件通知",
+        "sms": "短信通知",
+        "send": "发送通知"
+      },
+      "labels": {
+        "prepare": "整理文本",
+        "create": "工厂方法创建产品",
+        "send": "发送",
+        "product": "当前产品",
+        "idle": "等待发送"
+      },
+      "explanation": "变的是创建方法返回的产品，整理文本和发送的业务流程继续复用。"
+    },
+    "abstract-factory": {
+      "title": "一键替换整个产品族",
+      "instruction": "切换工厂，观察按钮与复选框是否一起改变。",
+      "controls": {
+        "light": "浅色主题",
+        "dark": "深色主题"
+      },
+      "labels": {
+        "factory": "当前工厂",
+        "button": "按钮产品",
+        "checkbox": "复选框产品",
+        "sample": "确认",
+        "select": "勾选此项"
+      },
+      "explanation": "一次选择决定一整套兼容的产品，不是分别替换每个控件。"
+    },
+    "builder": {
+      "title": "亲手组装一个导出任务",
+      "instruction": "选择格式和可选项，再构建。继续修改配置不会改变已经构建的结果。",
+      "controls": {
+        "format": "输出格式",
+        "header": "加上页眉",
+        "compress": "启用压缩",
+        "build": "生成任务"
+      },
+      "labels": {
+        "draft": "正在配置的草稿",
+        "built": "已生成的任务",
+        "empty": "尚未构建",
+        "enabled": "启用",
+        "disabled": "不启用"
+      },
+      "explanation": "建造者承载分步配置，build 交付独立结果；链式语法不是重点。"
+    },
+    "prototype": {
+      "title": "修改副本，模板会变吗？",
+      "instruction": "分别试试浅拷贝和原型复制，再给副本加标签。",
+      "controls": {
+        "shallow": "共享标签复制",
+        "clone": "独立标签复制",
+        "edit": "给副本加标签",
+        "reset": "重置模板"
+      },
+      "labels": {
+        "template": "原模板",
+        "copy": "复制品",
+        "tags": "标签列表",
+        "empty": "先创建复制品",
+        "shared": "共享同一个列表",
+        "independent": "两个独立列表"
+      },
+      "explanation": "浅拷贝仍共享嵌套引用；clone 显式复制需要独立的标签列表。"
+    },
+    "adapter": {
+      "title": "看金额怎样经过接口转换",
+      "instruction": "改变业务金额，观察适配器把元转换为旧 SDK 要求的分。",
+      "controls": {
+        "amount": "业务金额（元）"
+      },
+      "labels": {
+        "business": "业务调用 pay",
+        "adapter": "适配器 ×100",
+        "sdk": "SDK 调用 charge",
+        "yuan": "元",
+        "cents": "分"
+      },
+      "explanation": "转换留在接口边界，调用方不需要记住旧 SDK 的单位。"
+    },
+    "bridge": {
+      "title": "两个维度，自由组合",
+      "instruction": "分别选择消息形式和发送渠道，体验四种组合。",
+      "controls": {
+        "normal": "普通消息",
+        "urgent": "紧急消息",
+        "email": "邮件",
+        "sms": "短信"
+      },
+      "labels": {
+        "form": "消息形式",
+        "channel": "发送渠道",
+        "message": "消息预览",
+        "hello": "订单已确认",
+        "urgent": "紧急"
+      },
+      "explanation": "内容形式与传输实现独立扩展，不需要为每个组合定义新类。"
+    },
+    "composite": {
+      "title": "嵌套礼包，总价照算",
+      "instruction": "新增商品，或把当前礼包包进更大的礼包。",
+      "controls": {
+        "add": "加入商品 10",
+        "nest": "再嵌套一层礼包",
+        "reset": "重置商品树"
+      },
+      "labels": {
+        "bundle": "礼包",
+        "item": "商品",
+        "total": "递归总价",
+        "depth": "嵌套层数"
+      },
+      "explanation": "叶子返回价格，组合递归求和；调用方一直使用同一个 total 操作。"
+    },
+    "decorator": {
+      "title": "配料一层层叠加",
+      "instruction": "给基础咖啡加牛奶和糖，观察包装顺序与价格。",
+      "controls": {
+        "milk": "加一层牛奶 +2",
+        "sugar": "加一层糖 +1",
+        "remove": "去掉最外层",
+        "reset": "恢复基础咖啡"
+      },
+      "labels": {
+        "coffee": "基础咖啡",
+        "milk": "牛奶",
+        "sugar": "糖",
+        "cost": "最终价格",
+        "delegates": "从外向内委托，再累加"
+      },
+      "explanation": "每层保留同一接口，委托给内部对象，再增加自己的职责。"
+    },
+    "facade": {
+      "title": "一个启动入口，三个子系统",
+      "instruction": "调用启动外观，观察它按顺序协调组件。",
+      "controls": {
+        "start": "启动系统",
+        "reset": "重置启动过程"
+      },
+      "labels": {
+        "db": "连接数据库",
+        "cache": "启动缓存",
+        "log": "打开日志",
+        "waiting": "等待",
+        "done": "已完成",
+        "facade": "启动外观"
+      },
+      "explanation": "一个入口替调用方编排多个子系统；子系统本身没有被删除。"
+    },
+    "flyweight": {
+      "title": "种更多树，复用同一树种",
+      "instruction": "选择树种再种树，比较树的数量与共享类型的数量。",
+      "controls": {
+        "oak": "橡树",
+        "pine": "松树",
+        "plant": "种一棵树",
+        "reset": "清空地图"
+      },
+      "labels": {
+        "trees": "独立树对象",
+        "types": "共享树种对象",
+        "position": "位置"
+      },
+      "explanation": "位置属于每棵树，树种数据由同类树共享；不把对象总数误当类型总数。"
+    },
+    "proxy": {
+      "title": "创建不加载，展示才加载",
+      "instruction": "先创建图片代理，再连续展示，观察真实加载次数。",
+      "controls": {
+        "create": "创建代理",
+        "display": "展示图片",
+        "reset": "清空资源"
+      },
+      "labels": {
+        "proxy": "图片代理",
+        "real": "真实图片",
+        "loads": "真实加载次数",
+        "displays": "展示次数",
+        "empty": "未创建",
+        "pending": "等待首次展示",
+        "loaded": "已加载，后续复用"
+      },
+      "explanation": "代理控制真实对象的创建时机；多次展示只触发一次加载。"
+    },
+    "chain-of-responsibility": {
+      "title": "这张工单由谁处理？",
+      "instruction": "调整金额，再把工单交给链首。金额过高时也要明确显示未处理。",
+      "controls": {
+        "amount": "退款金额",
+        "submit": "提交工单"
+      },
+      "labels": {
+        "agent": "一线 ≤100",
+        "supervisor": "主管 ≤1000",
+        "manager": "经理 ≤5000",
+        "result": "处理结果",
+        "pending": "尚未提交",
+        "unhandled": "无人处理"
+      },
+      "explanation": "请求按顺序传递，第一个能处理的对象接手，后面的处理者不会执行。"
+    },
+    "command": {
+      "title": "执行一次，再撤销一次",
+      "instruction": "把输入变成插入命令，观察文本和历史栈。",
+      "controls": {
+        "text": "要插入的文本",
+        "execute": "插入文本",
+        "undo": "撤销插入"
+      },
+      "labels": {
+        "editor": "编辑器文本",
+        "history": "可撤销的操作",
+        "empty": "没有可撤销命令"
+      },
+      "explanation": "命令保存请求和撤销信息；历史栈弹出命令后恢复执行前的文本。"
+    },
+    "interpreter": {
+      "title": "满足优惠资格吗？",
+      "instruction": "修改年龄和会员条件，观察两个叶子与 AND 的求值。",
+      "controls": {
+        "age": "年龄",
+        "member": "会员"
+      },
+      "labels": {
+        "age": "年龄 >18",
+        "member": "会员条件",
+        "and": "年龄与会员都满足",
+        "yes": "成立",
+        "no": "不成立"
+      },
+      "explanation": "终结表达式读取上下文，AND 递归组合子表达式；这里手工构造语法树。"
+    },
+    "iterator": {
+      "title": "一步一步走过播放列表",
+      "instruction": "切换遍历方向，再逐个取下一项。集合本身不改变。",
+      "controls": {
+        "forward": "正向",
+        "reverse": "逆向",
+        "next": "读取下一首",
+        "reset": "从头读取"
+      },
+      "labels": {
+        "collection": "原始集合",
+        "cursor": "已读取数量",
+        "value": "本次取出的歌曲",
+        "empty": "尚未取值",
+        "end": "遍历完成"
+      },
+      "explanation": "顺序与游标属于迭代器，而不是调用方的索引循环。"
+    },
+    "mediator": {
+      "title": "一个事件，协调两个控件",
+      "instruction": "输入搜索文本，再点击清空，观察协调事件。",
+      "controls": {
+        "query": "搜索文本",
+        "clear": "点击清空控件"
+      },
+      "labels": {
+        "search": "搜索框",
+        "results": "搜索结果",
+        "mediator": "协调过程",
+        "empty": "结果为空"
+      },
+      "explanation": "控件只汇报事件，中介者负责更新其他控件，没有控件间的直接调用。"
+    },
+    "memento": {
+      "title": "保存一个时刻，再恢复它",
+      "instruction": "编辑文本并保存快照，继续修改后选择某个快照恢复。",
+      "controls": {
+        "text": "当前文本",
+        "save": "保存快照",
+        "restore": "恢复此快照"
+      },
+      "labels": {
+        "current": "编辑器状态",
+        "history": "快照时间线",
+        "cursor": "光标位置",
+        "empty": "还没有快照"
+      },
+      "explanation": "保存的是状态，不是操作；每个快照保留自己的文本和光标。"
+    },
+    "observer": {
+      "title": "谁订阅，谁收到通知",
+      "instruction": "选择订阅者，再改变库存。退订后不应该继续收到事件。",
+      "controls": {
+        "display": "展示页订阅",
+        "email": "邮件提醒订阅",
+        "publish": "库存 +1 并通知",
+        "reset": "清空通知记录"
+      },
+      "labels": {
+        "stock": "当前库存",
+        "display": "展示页收到",
+        "email": "邮件提醒收到",
+        "none": "未收到",
+        "subscribed": "已订阅",
+        "unsubscribed": "已退订"
+      },
+      "explanation": "发布者只遍历当前订阅集合；退订影响后续通知，不会抹去已收到的记录。"
+    },
+    "state": {
+      "title": "同一个按钮，状态不同含义不同",
+      "instruction": "点击播放器：停止时启动，播放时暂停，暂停时恢复。",
+      "controls": {
+        "click": "播放 / 暂停",
+        "stop": "停止"
+      },
+      "labels": {
+        "stopped": "已停止",
+        "playing": "播放中",
+        "paused": "已暂停",
+        "current": "当前状态",
+        "transitions": "状态转移记录"
+      },
+      "explanation": "动作委托给当前状态；状态不仅决定行为，也决定合法的下一次转移。"
+    },
+    "template-method": {
+      "title": "换一个步骤，不换算法骨架",
+      "instruction": "选择输入格式并导入，观察读取与保存不变，只有转换不同。",
+      "controls": {
+        "csv": "CSV 输入",
+        "json": "JSON 输入",
+        "run": "执行导入"
+      },
+      "labels": {
+        "read": "读取",
+        "transform": "转换",
+        "save": "保存",
+        "source": "当前输入",
+        "output": "保存结果",
+        "waiting": "尚未执行"
+      },
+      "explanation": "子类只替换转换步骤，基类安排读取、转换、保存的固定顺序。"
+    },
+    "visitor": {
+      "title": "同一棵树，两种访问操作",
+      "instruction": "在大小统计与名称导出之间切换，元素结构保持不变。",
+      "controls": {
+        "size": "统计总大小",
+        "names": "导出文件名",
+        "visit": "执行所选操作"
+      },
+      "labels": {
+        "tree": "文件结构",
+        "folder": "文件夹",
+        "file": "文本文件",
+        "operation": "要执行的操作",
+        "result": "访问结果",
+        "empty": "等待访问"
+      },
+      "explanation": "元素通过 accept 把具体类型交给访问者；新增操作不是继续修改每种节点。"
+    }
+  }
+}

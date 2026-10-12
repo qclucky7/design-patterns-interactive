@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Separate responsibilities into independent modules</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="6" y="23" width="18" height="18" fill="#191d22"/>
+    <path d="M24 32H34M34 14V50M34 14H44M34 32H44M34 50H44"/>
+    <rect x="44" y="8" width="12" height="12" fill="#315dce" stroke="#315dce"/>
+    <rect x="44" y="26" width="12" height="12"/>
+    <rect x="44" y="44" width="12" height="12"/>
+  </g>
+</svg>

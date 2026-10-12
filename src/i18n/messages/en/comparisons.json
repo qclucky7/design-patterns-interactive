@@ -1,0 +1,1296 @@
+{
+  "title": "Pattern comparisons",
+  "description": "Similar structures, different intentions. Compare common points of confusion through concrete scenarios.",
+  "search": "Find a comparison",
+  "empty": "No comparisons found",
+  "menu": "Open comparison directory",
+  "close": "Close directory",
+  "labels": {
+    "scenario": "Shared scenario",
+    "experiment": "Try both approaches",
+    "reset": "Reset",
+    "differences": "What changes the decision",
+    "coexist": "Can they work together?",
+    "quiz": "Which would you choose?",
+    "correct": "That's right",
+    "retry": "Reconsider the intent",
+    "code": "Compare lesson code",
+    "codeNote": "These are the original lessons' independent examples, not implementations of the shared scenario above.",
+    "lesson": "Open lesson",
+    "result": "Current result",
+    "diagramNote": "Arrows show the current call path, not a complete class diagram.",
+    "language": "Code language",
+    "directory": "Comparison directory",
+    "all": "All comparisons"
+  },
+  "groups": {
+    "creational": {
+      "name": "Creation",
+      "description": "How objects are created"
+    },
+    "structural": {
+      "name": "Structure",
+      "description": "How objects fit together"
+    },
+    "behavioral": {
+      "name": "Behavior",
+      "description": "How responsibilities move"
+    }
+  },
+  "entries": {
+    "strategy-state": {
+      "title": "Strategy vs State",
+      "question": "Choose an algorithm or advance a state?",
+      "summary": "An order needs payment options and lifecycle-specific behavior.",
+      "scenario": "An order needs payment options and lifecycle-specific behavior.",
+      "sides": [
+        {
+          "intent": "Select an algorithm",
+          "guide": "Choose card or wallet without changing checkout.",
+          "states": [
+            {
+              "name": "Card payment completed",
+              "result": "Card payment completed",
+              "paths": [
+                [
+                  "Checkout",
+                  "Card strategy",
+                  "Pay"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use wallet",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Wallet payment completed",
+              "result": "Wallet payment completed",
+              "paths": [
+                [
+                  "Checkout",
+                  "Wallet strategy",
+                  "Pay"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use card",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "State governs behavior",
+          "guide": "Pay first, then refund. Available operations depend on order state.",
+          "states": [
+            {
+              "name": "Pending: payment allowed",
+              "result": "Pending: payment allowed",
+              "paths": [
+                [
+                  "Order",
+                  "Pending",
+                  "Pay"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Pay",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Paid: refund allowed",
+              "result": "Paid: refund allowed",
+              "paths": [
+                [
+                  "Order",
+                  "Paid",
+                  "Refund"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Refund",
+                  "target": 2
+                }
+              ]
+            },
+            {
+              "name": "Refunded: complete",
+              "result": "Refunded: complete",
+              "paths": [
+                [
+                  "Order",
+                  "Refunded",
+                  "Finish"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Start again",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Source of change",
+          "left": "Payment algorithms",
+          "right": "Order lifecycle"
+        },
+        {
+          "dimension": "Switching",
+          "left": "Caller selects an algorithm",
+          "right": "Events and state rules"
+        },
+        {
+          "dimension": "Intent",
+          "left": "Alternative ways to do one task",
+          "right": "Behavior dependent on current state"
+        }
+      ],
+      "coexist": "An order state may use a payment strategy. The patterns can coexist; who triggers the switch alone is not a reliable distinction.",
+      "quizzes": [
+        {
+          "question": "Add a payment algorithm without changing checkout.",
+          "answer": 0,
+          "explanation": "Payment algorithms"
+        },
+        {
+          "question": "Paid and pending orders allow different operations.",
+          "answer": 1,
+          "explanation": "Order lifecycle"
+        }
+      ]
+    },
+    "factory-method-abstract-factory": {
+      "title": "Factory Method vs Abstract Factory",
+      "question": "Create one product or a coherent family?",
+      "summary": "A cross-platform editor needs exporters and consistent UI controls.",
+      "scenario": "A cross-platform editor needs exporters and consistent UI controls.",
+      "sides": [
+        {
+          "intent": "A creation hook",
+          "guide": "Switch concrete creators to obtain a different exporter.",
+          "states": [
+            {
+              "name": "PDF creator returns a PDF exporter",
+              "result": "PDF creator returns a PDF exporter",
+              "paths": [
+                [
+                  "Editor",
+                  "PDF creator",
+                  "PDF exporter"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use CSV creator",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "CSV creator returns a CSV exporter",
+              "result": "CSV creator returns a CSV exporter",
+              "paths": [
+                [
+                  "Editor",
+                  "CSV creator",
+                  "CSV exporter"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use PDF creator",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Create a family",
+          "guide": "Replace buttons and checkboxes together to avoid mixing platform styles.",
+          "states": [
+            {
+              "name": "Desktop button and checkbox",
+              "result": "Desktop button and checkbox",
+              "paths": [
+                [
+                  "Desktop factory",
+                  "Desktop button"
+                ],
+                [
+                  "Desktop factory",
+                  "Desktop checkbox"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use mobile family",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Mobile button and checkbox",
+              "result": "Mobile button and checkbox",
+              "paths": [
+                [
+                  "Mobile factory",
+                  "Mobile button"
+                ],
+                [
+                  "Mobile factory",
+                  "Mobile checkbox"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use desktop family",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Scope",
+          "left": "Creation hook for one product",
+          "right": "Interfaces for related products"
+        },
+        {
+          "dimension": "Extension",
+          "left": "Add a concrete creator",
+          "right": "Add a product family"
+        },
+        {
+          "dimension": "Trade-off",
+          "left": "Often requires creator subclasses",
+          "right": "New product kinds affect all factories"
+        }
+      ],
+      "coexist": "An abstract factory can use factory methods. Ask whether multiple related products must remain consistent.",
+      "quizzes": [
+        {
+          "question": "Obtain an exporter through an overridable creation method.",
+          "answer": 0,
+          "explanation": "Creation hook for one product"
+        },
+        {
+          "question": "Replace buttons, checkboxes and menus as one family.",
+          "answer": 1,
+          "explanation": "Interfaces for related products"
+        }
+      ]
+    },
+    "builder-factory-method": {
+      "title": "Builder vs Factory Method",
+      "question": "Assemble step by step or choose a type?",
+      "summary": "A report service needs configurable content and different export formats.",
+      "scenario": "A report service needs configurable content and different export formats.",
+      "sides": [
+        {
+          "intent": "Build incrementally",
+          "guide": "Add a heading, then a chart, and watch one product accumulate configuration.",
+          "states": [
+            {
+              "name": "Empty report",
+              "result": "Empty report",
+              "paths": [
+                [
+                  "Builder",
+                  "Empty report"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Add heading",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Report with heading",
+              "result": "Report with heading",
+              "paths": [
+                [
+                  "Builder",
+                  "Add heading",
+                  "Report"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Add chart",
+                  "target": 2
+                }
+              ]
+            },
+            {
+              "name": "Report with heading and chart",
+              "result": "Report with heading and chart",
+              "paths": [
+                [
+                  "Builder",
+                  "Heading and chart",
+                  "Report"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Build again",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Choose a product type",
+          "guide": "Change the concrete creator rather than expose assembly steps.",
+          "states": [
+            {
+              "name": "Create a PDF exporter",
+              "result": "Create a PDF exporter",
+              "paths": [
+                [
+                  "Creator",
+                  "PDF exporter"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Choose HTML",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Create an HTML exporter",
+              "result": "Create an HTML exporter",
+              "paths": [
+                [
+                  "Creator",
+                  "HTML exporter"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Choose PDF",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Focus",
+          "left": "Construction and optional settings",
+          "right": "Which concrete product to create"
+        },
+        {
+          "dimension": "Usage",
+          "left": "Configure in steps, then get a result",
+          "right": "Obtain a product through a creation method"
+        },
+        {
+          "dimension": "Best fit",
+          "left": "Complex objects or representations",
+          "right": "Extensible product creation"
+        }
+      ],
+      "coexist": "A factory method may return a builder or use one internally. Complex construction and type selection are separate concerns.",
+      "quizzes": [
+        {
+          "question": "Add sections, a contents page and charts before producing a report.",
+          "answer": 0,
+          "explanation": "Construction and optional settings"
+        },
+        {
+          "question": "Let subclasses decide which exporter a framework uses.",
+          "answer": 1,
+          "explanation": "Which concrete product to create"
+        }
+      ]
+    },
+    "adapter-bridge": {
+      "title": "Adapter vs Bridge",
+      "question": "Adapt an old interface or separate dimensions?",
+      "summary": "A notification system integrates a legacy SMS SDK and supports urgency levels across channels.",
+      "scenario": "A notification system integrates a legacy SMS SDK and supports urgency levels across channels.",
+      "sides": [
+        {
+          "intent": "Translate an interface",
+          "guide": "Call a uniform send interface; the adapter translates it to the legacy SDK.",
+          "states": [
+            {
+              "name": "Legacy interface does not match",
+              "result": "Legacy interface does not match",
+              "paths": [
+                [
+                  "Notification",
+                  "Interface mismatch"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Insert adapter",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Adapted legacy SDK sends successfully",
+              "result": "Adapted legacy SDK sends successfully",
+              "paths": [
+                [
+                  "Notification",
+                  "SMS adapter",
+                  "Legacy SDK"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Show original interface",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Combine independent dimensions",
+          "guide": "Keep urgent notification behavior while switching the delivery channel.",
+          "states": [
+            {
+              "name": "Urgent notification by email",
+              "result": "Urgent notification by email",
+              "paths": [
+                [
+                  "Urgent notification",
+                  "Email implementation",
+                  "Send"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use SMS channel",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Urgent notification by SMS",
+              "result": "Urgent notification by SMS",
+              "paths": [
+                [
+                  "Urgent notification",
+                  "SMS implementation",
+                  "Send"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use email channel",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Starting point",
+          "left": "Existing incompatible interfaces",
+          "right": "Independently changing dimensions"
+        },
+        {
+          "dimension": "Structure",
+          "left": "Convert an existing interface",
+          "right": "Evolve abstraction and implementation separately"
+        },
+        {
+          "dimension": "Typical timing",
+          "left": "Integrating existing or third-party code",
+          "right": "Designing a composable structure"
+        }
+      ],
+      "coexist": "A bridge implementation may use an adapter for a legacy SDK. Shared use of composition does not imply shared intent.",
+      "quizzes": [
+        {
+          "question": "Unify incompatible SDK method signatures.",
+          "answer": 0,
+          "explanation": "Existing incompatible interfaces"
+        },
+        {
+          "question": "Extend notification urgency and delivery channels independently.",
+          "answer": 1,
+          "explanation": "Independently changing dimensions"
+        }
+      ]
+    },
+    "adapter-facade": {
+      "title": "Adapter vs Facade",
+      "question": "Translate an interface or simplify an entry point?",
+      "summary": "A travel app integrates a legacy hotel API and offers one-step trip booking.",
+      "scenario": "A travel app integrates a legacy hotel API and offers one-step trip booking.",
+      "sides": [
+        {
+          "intent": "Translate the hotel interface",
+          "guide": "Use an adapter to connect a uniform booking interface to a legacy hotel API.",
+          "states": [
+            {
+              "name": "New interface cannot call the legacy API",
+              "result": "New interface cannot call the legacy API",
+              "paths": [
+                [
+                  "Booking",
+                  "Incompatible interface"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Adapt interface",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Adapter translates parameters and books a room",
+              "result": "Adapter translates parameters and books a room",
+              "paths": [
+                [
+                  "Booking",
+                  "Hotel adapter",
+                  "Legacy hotel API"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Show mismatch",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "One trip-booking entry point",
+          "guide": "One operation coordinates flights, hotels and payment without making their interfaces identical.",
+          "states": [
+            {
+              "name": "User calls three subsystems separately",
+              "result": "User calls three subsystems separately",
+              "paths": [
+                [
+                  "User",
+                  "Flights"
+                ],
+                [
+                  "User",
+                  "Hotel"
+                ],
+                [
+                  "User",
+                  "Payment"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Book trip",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Facade coordinates all three subsystems",
+              "result": "Facade coordinates all three subsystems",
+              "paths": [
+                [
+                  "User",
+                  "Trip facade",
+                  "Flights"
+                ],
+                [
+                  "User",
+                  "Trip facade",
+                  "Hotel"
+                ],
+                [
+                  "User",
+                  "Trip facade",
+                  "Payment"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Show direct calls",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Problem",
+          "left": "Incompatible interfaces",
+          "right": "Complex subsystem usage"
+        },
+        {
+          "dimension": "Interface",
+          "left": "The interface callers expect",
+          "right": "A simpler high-level entry point"
+        },
+        {
+          "dimension": "Responsibility",
+          "left": "Translate calls and data",
+          "right": "Coordinate subsystem calls"
+        }
+      ],
+      "coexist": "A trip facade can call a hotel adapter. A facade normally does not prevent direct subsystem access.",
+      "quizzes": [
+        {
+          "question": "Convert a legacy hotel API to the interface the app expects.",
+          "answer": 0,
+          "explanation": "Incompatible interfaces"
+        },
+        {
+          "question": "Offer one operation for flights, hotels and payment.",
+          "answer": 1,
+          "explanation": "Complex subsystem usage"
+        }
+      ]
+    },
+    "decorator-proxy": {
+      "title": "Decorator vs Proxy",
+      "question": "Add behavior or control access?",
+      "summary": "Online documents need watermarks and controlled access to the real document.",
+      "scenario": "Online documents need watermarks and controlled access to the real document.",
+      "sides": [
+        {
+          "intent": "Add responsibilities",
+          "guide": "Keep the reading interface while adding a watermark to the output.",
+          "states": [
+            {
+              "name": "Original document displayed",
+              "result": "Original document displayed",
+              "paths": [
+                [
+                  "Reader",
+                  "Document"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Add watermark",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Watermarked document displayed",
+              "result": "Watermarked document displayed",
+              "paths": [
+                [
+                  "Reader",
+                  "Watermark decorator",
+                  "Document"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Remove watermark",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Protect the real object",
+          "guide": "Deny an unauthorized request, then authorize it. Observe whether the real document is accessed.",
+          "states": [
+            {
+              "name": "Unauthorized: real document not accessed",
+              "result": "Unauthorized: real document not accessed",
+              "paths": [
+                [
+                  "Reader",
+                  "Access proxy",
+                  "Denied"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Authorize access",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Authorized: real document returns content",
+              "result": "Authorized: real document returns content",
+              "paths": [
+                [
+                  "Reader",
+                  "Access proxy",
+                  "Real document"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Revoke access",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Intent",
+          "left": "Add responsibilities to an object",
+          "right": "Control access to the real object"
+        },
+        {
+          "dimension": "Effect",
+          "left": "Layer additional behavior",
+          "right": "Decide whether, when or how to access"
+        },
+        {
+          "dimension": "Typical uses",
+          "left": "Watermarks, compression, logging",
+          "right": "Authorization, lazy loading, remote access"
+        }
+      ],
+      "coexist": "Both may wrap the same interface and can coexist. Distinguish responsibility and intent, not just class-diagram shape.",
+      "quizzes": [
+        {
+          "question": "Layer optional watermarks and compression on document output.",
+          "answer": 0,
+          "explanation": "Add responsibilities to an object"
+        },
+        {
+          "question": "Prevent unauthorized access to the real document.",
+          "answer": 1,
+          "explanation": "Control access to the real object"
+        }
+      ]
+    },
+    "composite-decorator": {
+      "title": "Composite vs Decorator",
+      "question": "Organize a tree or wrap one object?",
+      "summary": "A file browser renders a file tree and adds borders to individual views.",
+      "scenario": "A file browser renders a file tree and adds borders to individual views.",
+      "sides": [
+        {
+          "intent": "Unify leaves and containers",
+          "guide": "Switch from one file to a folder; the same render operation visits its children.",
+          "states": [
+            {
+              "name": "Render one file",
+              "result": "Render one file",
+              "paths": [
+                [
+                  "render",
+                  "File A"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Render folder",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Recursively render two files in a folder",
+              "result": "Recursively render two files in a folder",
+              "paths": [
+                [
+                  "render",
+                  "Folder",
+                  "File A"
+                ],
+                [
+                  "render",
+                  "Folder",
+                  "File B"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Render one file",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Wrap one component",
+          "guide": "Wrap the same file view with a border without changing the file tree.",
+          "states": [
+            {
+              "name": "Plain file view",
+              "result": "Plain file view",
+              "paths": [
+                [
+                  "render",
+                  "File view"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Add border",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Bordered file view",
+              "result": "Bordered file view",
+              "paths": [
+                [
+                  "render",
+                  "Border decorator",
+                  "File view"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Remove border",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Relationship",
+          "left": "A container holds multiple children",
+          "right": "A wrapper holds one component"
+        },
+        {
+          "dimension": "Goal",
+          "left": "Treat parts and wholes uniformly",
+          "right": "Compose additional responsibilities"
+        },
+        {
+          "dimension": "Propagation",
+          "left": "Recursively through a subtree",
+          "right": "Delegate through a wrapper chain"
+        }
+      ],
+      "coexist": "A leaf or a whole composite may be decorated. Tree organization and layered behavior can coexist.",
+      "quizzes": [
+        {
+          "question": "Give files and folders the same traversal operation.",
+          "answer": 0,
+          "explanation": "A container holds multiple children"
+        },
+        {
+          "question": "Add optional borders and scrolling to one view.",
+          "answer": 1,
+          "explanation": "A wrapper holds one component"
+        }
+      ]
+    },
+    "observer-mediator": {
+      "title": "Observer vs Mediator",
+      "question": "Broadcast changes or coordinate relationships?",
+      "summary": "Form changes notify previews and logs and coordinate country, city and submit controls.",
+      "scenario": "Form changes notify previews and logs and coordinate country, city and submit controls.",
+      "sides": [
+        {
+          "intent": "Publish notifications",
+          "guide": "Publish a change, then unsubscribe the logger and publish again.",
+          "states": [
+            {
+              "name": "Preview and logger receive the change",
+              "result": "Preview and logger receive the change",
+              "paths": [
+                [
+                  "Form",
+                  "Preview"
+                ],
+                [
+                  "Form",
+                  "Logger"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Unsubscribe logger",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Only preview receives the change",
+              "result": "Only preview receives the change",
+              "paths": [
+                [
+                  "Form",
+                  "Preview"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Resubscribe logger",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Centralize coordination rules",
+          "guide": "Selecting a country resets the city and disables submit; selecting a city enables it.",
+          "states": [
+            {
+              "name": "Country selected: city reset, submit disabled",
+              "result": "Country selected: city reset, submit disabled",
+              "paths": [
+                [
+                  "Country choice",
+                  "Form mediator",
+                  "Reset city"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Select city",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "City selected: submit enabled",
+              "result": "City selected: submit enabled",
+              "paths": [
+                [
+                  "City choice",
+                  "Form mediator",
+                  "Enable submit"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Change country",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Responsibility",
+          "left": "Notify subscribers of changes",
+          "right": "Determine how components collaborate"
+        },
+        {
+          "dimension": "Dependencies",
+          "left": "Publisher depends on notification contracts",
+          "right": "Components depend on a mediator"
+        },
+        {
+          "dimension": "Rules",
+          "left": "Responses live in subscribers",
+          "right": "Coordination lives in the mediator"
+        }
+      ],
+      "coexist": "A mediator may receive events through Observer. Avoid turning it into an oversized object containing all business logic.",
+      "quizzes": [
+        {
+          "question": "Allow new modules to subscribe independently to form changes.",
+          "answer": 0,
+          "explanation": "Notify subscribers of changes"
+        },
+        {
+          "question": "Manage enabling, resetting and validation between controls.",
+          "answer": 1,
+          "explanation": "Determine how components collaborate"
+        }
+      ]
+    },
+    "strategy-template-method": {
+      "title": "Strategy vs Template Method",
+      "question": "Replace an algorithm or customize steps in a fixed workflow?",
+      "summary": "Data import needs alternative parsers and a consistent validation-and-save sequence.",
+      "scenario": "Data import needs alternative parsers and a consistent validation-and-save sequence.",
+      "sides": [
+        {
+          "intent": "Compose an algorithm",
+          "guide": "Select a parser at runtime; the importer delegates parsing.",
+          "states": [
+            {
+              "name": "CSV strategy parsed data",
+              "result": "CSV strategy parsed data",
+              "paths": [
+                [
+                  "Importer",
+                  "CSV strategy",
+                  "Parse"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Select JSON strategy",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "JSON strategy parsed data",
+              "result": "JSON strategy parsed data",
+              "paths": [
+                [
+                  "Importer",
+                  "JSON strategy",
+                  "Parse"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Select CSV strategy",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Fix the workflow skeleton",
+          "guide": "Switch subclasses: parsing differs, but read, validate and save remain in order.",
+          "states": [
+            {
+              "name": "CSV subclass completes the fixed workflow",
+              "result": "CSV subclass completes the fixed workflow",
+              "paths": [
+                [
+                  "Read",
+                  "CSV parse",
+                  "Validate",
+                  "Save"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use JSON subclass",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "JSON subclass completes the fixed workflow",
+              "result": "JSON subclass completes the fixed workflow",
+              "paths": [
+                [
+                  "Read",
+                  "JSON parse",
+                  "Validate",
+                  "Save"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use CSV subclass",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Mechanism",
+          "left": "Composition and delegation",
+          "right": "Inheritance and overriding"
+        },
+        {
+          "dimension": "Variation",
+          "left": "Replace an algorithm object",
+          "right": "Override selected skeleton steps"
+        },
+        {
+          "dimension": "Constraint",
+          "left": "Strategies share a contract",
+          "right": "Subclasses follow the template sequence"
+        }
+      ],
+      "coexist": "A template step may delegate to a strategy. A fixed workflow and dynamic algorithm selection can coexist.",
+      "quizzes": [
+        {
+          "question": "Choose a parser at runtime for the same importer.",
+          "answer": 0,
+          "explanation": "Composition and delegation"
+        },
+        {
+          "question": "Fix the import order and let subclasses customize parsing.",
+          "answer": 1,
+          "explanation": "Inheritance and overriding"
+        }
+      ]
+    },
+    "command-strategy": {
+      "title": "Command vs Strategy",
+      "question": "Encapsulate a request or select an algorithm?",
+      "summary": "A text editor needs undoable edits and alternative formatting algorithms.",
+      "scenario": "A text editor needs undoable edits and alternative formatting algorithms.",
+      "sides": [
+        {
+          "intent": "Make a request an object",
+          "guide": "Execute a bold command, then undo. This example command explicitly stores the previous value.",
+          "states": [
+            {
+              "name": "Queued: plain text",
+              "result": "Queued: plain text",
+              "paths": [
+                [
+                  "Toolbar",
+                  "Bold command"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Execute command",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Executed: bold text",
+              "result": "Executed: bold text",
+              "paths": [
+                [
+                  "Toolbar",
+                  "Bold command",
+                  "Editor"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Undo command",
+                  "target": 2
+                }
+              ]
+            },
+            {
+              "name": "Undone: plain text",
+              "result": "Undone: plain text",
+              "paths": [
+                [
+                  "History",
+                  "Undo command",
+                  "Restore previous value"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Execute again",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "intent": "Select a formatter",
+          "guide": "Choose uppercase or lowercase. Algorithm selection alone does not create undo history.",
+          "states": [
+            {
+              "name": "Formatted: HELLO",
+              "result": "Formatted: HELLO",
+              "paths": [
+                [
+                  "Formatter",
+                  "Uppercase strategy",
+                  "HELLO"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use lowercase",
+                  "target": 1
+                }
+              ]
+            },
+            {
+              "name": "Formatted: hello",
+              "result": "Formatted: hello",
+              "paths": [
+                [
+                  "Formatter",
+                  "Lowercase strategy",
+                  "hello"
+                ]
+              ],
+              "actions": [
+                {
+                  "label": "Use uppercase",
+                  "target": 0
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "differences": [
+        {
+          "dimension": "Encapsulation",
+          "left": "Receiver, request and parameters",
+          "right": "An algorithm for a task"
+        },
+        {
+          "dimension": "Usage",
+          "left": "Execute, queue or record requests",
+          "right": "Select an algorithm and delegate"
+        },
+        {
+          "dimension": "Undo",
+          "left": "Requires explicit implementation and state",
+          "right": "Does not provide request history itself"
+        }
+      ],
+      "coexist": "A formatting command may use a formatting strategy. Not every command is undoable; undo must be implemented explicitly.",
+      "quizzes": [
+        {
+          "question": "Queue an edit with its parameters and support undo.",
+          "answer": 0,
+          "explanation": "Receiver, request and parameters"
+        },
+        {
+          "question": "Choose different formatting algorithms for the same input.",
+          "answer": 1,
+          "explanation": "An algorithm for a task"
+        }
+      ]
+    }
+  }
+}

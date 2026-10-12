@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>A saved snapshot restores an earlier state</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="8" y="23" width="18" height="18" fill="#191d22" /><rect x="38" y="23" width="18" height="18" fill="none" stroke="#315dce" /><path d="M17 19V10H47V19" stroke="#315dce" stroke-dasharray="3 4" /><path d="M47 46V54H17V46M12 50L17 45L22 50" stroke="#315dce" />
+  </g>
+</svg>

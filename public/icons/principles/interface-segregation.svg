@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Clients depend only on the small interface they need</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="7" y="8" width="14" height="14" fill="#191d22"/>
+    <rect x="7" y="42" width="14" height="14"/>
+    <path d="M21 15H43" stroke="#315dce"/><path d="M21 49H43"/>
+    <rect x="43" y="7" width="14" height="16" fill="#315dce" stroke="#315dce"/>
+    <rect x="43" y="41" width="14" height="16"/>
+    <path d="M46 32H54" stroke="#191d22" stroke-dasharray="2 4"/>
+  </g>
+</svg>

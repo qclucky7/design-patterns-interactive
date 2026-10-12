@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>A creation point delegates to concrete products</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M32 22V31M14 40V31H50V40" stroke="#191d22" /><rect x="24" y="8" width="16" height="16" fill="#315dce" /><rect x="8" y="40" width="12" height="12" fill="none" stroke="#191d22" /><rect x="26" y="40" width="12" height="12" fill="#191d22" /><rect x="44" y="40" width="12" height="12" fill="none" stroke="#191d22" />
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Many objects reuse one shared intrinsic state</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M22 15H32V32H41M22 32H41M22 49H32V32" stroke="#315dce" stroke-dasharray="3 4" /><rect x="8" y="9" width="12" height="12" fill="none" stroke="#191d22" /><rect x="8" y="26" width="12" height="12" fill="none" stroke="#191d22" /><rect x="8" y="43" width="12" height="12" fill="none" stroke="#191d22" /><rect x="41" y="24" width="16" height="16" fill="#315dce" />
+  </g>
+</svg>

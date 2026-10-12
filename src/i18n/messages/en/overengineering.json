@@ -1,0 +1,195 @@
+{
+  "labels": {
+    "heading": "Counterexamples & overengineering",
+    "excess": "Taking it too far",
+    "cost": "The added cost",
+    "simpler": "Start with the simpler option",
+    "reconsider": "Reconsider when this changes"
+  },
+  "patterns": {
+    "singleton": {
+      "title": "Shared configuration is not a global access pass",
+      "scenario": "A small application reads configuration once at startup. Every feature then uses that read-only configuration.",
+      "excess": "To avoid passing a parameter, put configuration, user sessions and shopping carts in a singleton that any business method can access.",
+      "cost": "Dependencies become hidden and tests share state. Requests can accidentally share user data. A singleton also cannot guarantee one shared object across processes.",
+      "simpler": "Create configuration at startup and pass it through constructors or the existing dependency-injection container. Keep user state scoped to each request.",
+      "reconsider": "Constrain lifetime when a resource genuinely must have one instance per process and ownership of initialization, concurrent access and disposal is clear. If a container already manages that instance, a global accessor adds nothing."
+    },
+    "factory-method": {
+      "title": "One email sender does not need a creation hierarchy",
+      "scenario": "Notifications use only email, and the sender is created once at application startup.",
+      "excess": "Replace a single constructor call with an abstract workflow, creation hook, email subclass and subclass registry.",
+      "cost": "Understanding one creation step requires several files and inheritance rules, without any real product to substitute.",
+      "simpler": "Construct the email sender directly. Pass it into the workflow when tests need a replacement.",
+      "reconsider": "Use Factory Method when subclasses must choose products inside a shared, stable workflow. If you only need centralized creation, a factory function is enough."
+    },
+    "abstract-factory": {
+      "title": "Changing a color does not create a product family",
+      "scenario": "The page has one kind of button. Changing the theme only changes colors and font sizes.",
+      "excess": "Build a separate factory and button implementation for every color, plus interfaces for checkboxes and inputs that do not exist yet.",
+      "cost": "Style settings become classes. Adding a control requires changing every factory before any coordinated product family is needed.",
+      "simpler": "Use theme variables or configuration with one button component. Do not treat visual settings alone as product families.",
+      "reconsider": "Use Abstract Factory when several product types must be replaced together and each family has distinct implementations and compatibility constraints."
+    },
+    "builder": {
+      "title": "Three clear options do not need ten build calls",
+      "scenario": "An export needs a format, filename and compression flag. The language already offers named arguments or an options object.",
+      "excess": "Turn every option into a build step, then add a director, builder interface and intermediate-state objects.",
+      "cost": "Calls become longer. You must also guard against missing required steps, repeated builds and options left over from previous use.",
+      "simpler": "Use named arguments or a typed options object. Validate required fields and defaults at the construction boundary.",
+      "reconsider": "Use Builder when assembly genuinely happens in stages, some combinations are invalid, or one assembly process must produce different representations."
+    },
+    "prototype": {
+      "title": "Copying a card does not require a prototype registry",
+      "scenario": "Cards contain a title and tags. They are cheap to construct, with no large set of preconfigured templates.",
+      "excess": "Introduce a prototype registry, cloning interface and layered copy policies for simple data, including database connections in the clone.",
+      "cost": "Shallow copies can share mutable tag lists. Deep copies can mishandle resources. Straightforward initialization becomes a question of copying semantics.",
+      "simpler": "Construct cards directly or use an explicit copy function. Copy the tag collection deliberately and do not clone external resources.",
+      "reconsider": "Define a cloning protocol when independent instances must come from complex preconfigured objects and the boundary between copied state and shared resources is clear."
+    },
+    "adapter": {
+      "title": "If both interfaces can change, align them first",
+      "scenario": "The same team owns the payment caller and new payment component. Neither interface has been published externally.",
+      "excess": "Keep two easily unified pay and charge interfaces and add adapters in both directions. Treat authorization and capture as mere naming differences.",
+      "cost": "Unit conversion, error mapping and tests gain another layer. Different business semantics can cause incorrect payment behavior.",
+      "simpler": "Agree on amount units, operation meaning and errors. When both sides can change, implement the same contract directly.",
+      "reconsider": "Adapt an unmodifiable legacy SDK or external service at the boundary when its operation genuinely matches yours. Test unit conversions and error mapping explicitly."
+    },
+    "bridge": {
+      "title": "One changing dimension does not need two hierarchies",
+      "scenario": "The system sends only ordinary notifications, through either email or SMS.",
+      "excess": "Build separate hierarchies for message forms and delivery channels, anticipating urgent and encrypted forms that are not needed yet.",
+      "cost": "Tracing one delivery crosses two abstractions, and the team maintains combination rules for nonexistent requirements.",
+      "simpler": "Let the notification service depend on one delivery interface and inject an email or SMS implementation.",
+      "reconsider": "Use Bridge when message forms and channels both evolve independently and inheritance combinations start multiplying. Separate two real dimensions, not imagined ones."
+    },
+    "composite": {
+      "title": "A flat shopping list does not need a pretend tree",
+      "scenario": "The cart is a list of products. A bundle is just an indivisible product SKU.",
+      "excess": "Give every product a child-management interface and wrap the flat list in a tree. Make leaves implement meaningless add and remove operations.",
+      "cost": "Recursion and empty methods add work. Shared references or cycles can later cause duplicate pricing or endless traversal.",
+      "simpler": "Sum the product list directly. Use explicit pricing rules when bundles do not have uniform recursive semantics.",
+      "reconsider": "Use Composite when bundles can contain bundles, leaves and containers meaningfully support the same operation, and the structure really is a tree."
+    },
+    "decorator": {
+      "title": "A fixed coffee recipe does not need five wrappers",
+      "scenario": "The menu has two fixed recipes. Ingredients cannot be freely combined or changed at runtime.",
+      "excess": "Split each recipe into layers of decorators and let wrapper order secretly determine discounts, pricing and ingredient conflicts.",
+      "cost": "The final price is hard to trace. Ordering becomes an implicit business rule, and testing each layer does not establish that a combination is correct.",
+      "simpler": "Use recipe data and one pricing function. Express incompatible ingredients and discount order as explicit rules.",
+      "reconsider": "Use Decorator when added responsibilities compose independently behind the same interface and ordering semantics are clear. Do not use wrappers to hide tightly coupled rules."
+    },
+    "facade": {
+      "title": "A short startup function does not need a general manager",
+      "scenario": "The application has one entry point. A short function already expresses database and logging startup clearly.",
+      "excess": "Add a facade class, then funnel unrelated payment, user and reporting features into the same entry point.",
+      "cost": "The facade becomes a giant object. Changes affect unrelated callers and hide failures that callers need to handle.",
+      "simpler": "Keep the explicit startup function. Let each business module provide its own focused interface.",
+      "reconsider": "Offer a focused facade when several callers repeatedly orchestrate the same complex subsystem and common tasks have stable boundaries. Retain necessary low-level access."
+    },
+    "flyweight": {
+      "title": "Ten trees do not justify a shared object pool",
+      "scenario": "The map contains few trees. Species and color data are small, with no measured memory pressure.",
+      "excess": "Build a flyweight cache, key generator and eviction mechanism in advance. Put individual positions and mutable colors into shared objects too.",
+      "cost": "The cache consumes memory itself. Sharing mutable state can make a change to one tree affect other trees.",
+      "simpler": "Start with ordinary objects and measure memory. If sharing becomes necessary, share only immutable species data and keep positions per instance.",
+      "reconsider": "Separate intrinsic and extrinsic state when many objects duplicate expensive immutable data and measurements show meaningful savings. Define the cache lifetime as well."
+    },
+    "proxy": {
+      "title": "Cheap access does not need another interception layer",
+      "scenario": "The preview displays one small image. The existing image component already handles lazy loading and caching.",
+      "excess": "Write another image proxy to duplicate caching and lazy loading, and quietly swallow loading errors.",
+      "cost": "Cache invalidation and recovery get a second implementation. Callers may believe access succeeded while receiving stale data or no result.",
+      "simpler": "Use the existing component's loading facilities and expose loading and failure states. Call cheap operations directly.",
+      "reconsider": "Add a proxy when costly resources, permissions or remote access need control behind the original interface. Timeouts, failures and consistency still need explicit handling."
+    },
+    "chain-of-responsibility": {
+      "title": "Two stable amount ranges do not need a ticket pipeline",
+      "scenario": "Support tickets go to an agent or supervisor based on two fixed, mutually exclusive amount ranges.",
+      "excess": "Turn two conditions into a dynamically assembled chain without defining termination, unhandled requests or ordering effects.",
+      "cost": "Routing becomes opaque. Changing order can change the assignee, and missing a fallback can silently lose a ticket.",
+      "simpler": "Use one explicit routing function that returns the assignee. Test amount boundaries and the fallback path.",
+      "reconsider": "Use a chain when independent handlers must be added, removed or reordered and requests can try them sequentially. Define termination and unhandled outcomes."
+    },
+    "command": {
+      "title": "One immediate button action does not need a command bus",
+      "scenario": "A toolbar button clears temporary filters. There is no undo, queueing, replay or recording requirement.",
+      "excess": "Create a command class, executor, registry and history for one call, claiming every side effect can automatically be undone.",
+      "cost": "A simple event crosses several dispatch layers. Undoing an external email or payment is not just running a method backward.",
+      "simpler": "Call the clear function from the event handler. Design business compensation separately when external side effects need correction.",
+      "reconsider": "Make requests into commands when they need independent storage, delayed execution, composition or controlled undo. Define arguments, results and undo boundaries."
+    },
+    "interpreter": {
+      "title": "One age check does not need a rule language",
+      "scenario": "The rule is fixed: age at least 18 and membership active. Only developers change it.",
+      "excess": "Invent expression syntax, a parser and interpreter nodes for two conditions, then handwrite precedence and type conversions as it grows.",
+      "cost": "You maintain syntax errors, safety limits and performance as well as the rule. Complex input makes parsing and execution harder to control.",
+      "simpler": "Compose explicit predicate functions. For a genuinely complex rule language, prefer a mature parser or rule engine.",
+      "reconsider": "Evaluate Interpreter when a small, stable grammar represents expressions assembled from data and evaluated repeatedly. Do not grow a teaching grammar into a homemade general-purpose language."
+    },
+    "iterator": {
+      "title": "An array already knows how to iterate",
+      "scenario": "The playlist is an in-memory array. All you need is to read every song in order.",
+      "excess": "Rewrite hasNext, next and cursor management for the built-in array, forbidding callers from using the language's standard iteration syntax.",
+      "cost": "Boundaries, termination and mutation behavior need duplicate maintenance, with an interface inconsistent with built-in collections.",
+      "simpler": "Use built-in iterators, loops or generators and follow the existing collection protocol.",
+      "reconsider": "Implement the standard iteration protocol when paging, lazy loading or a special structure must hide storage details. Do not invent another traversal API."
+    },
+    "mediator": {
+      "title": "One search data flow does not need an all-purpose coordinator",
+      "scenario": "The search field sends a query to its page, which displays matching results. Data flows in one direction.",
+      "excess": "Register every control with a global mediator and put requests, rendering, caching and authorization in the coordinator.",
+      "cost": "Controls lose dependencies, but the central object becomes a new coupling hub. Local changes require understanding hidden page-wide scheduling.",
+      "simpler": "Express one-way data flow with page state and callbacks. Keep responsibilities in their own modules.",
+      "reconsider": "Extract bounded coordination when peer components genuinely form a web of bidirectional dependencies. Keep it from becoming a global manager."
+    },
+    "memento": {
+      "title": "An editor without undo does not need snapshot history",
+      "scenario": "The editor saves only the final content. There is no requirement to undo or restore earlier states.",
+      "excess": "Deep-copy the whole document on every keystroke, including connections, caches and large attachments, into an unlimited history.",
+      "cost": "Frequent input increases memory and copying costs. Snapshots can retain sensitive state or resources that cannot be copied safely.",
+      "simpler": "Keep only current content. When recovery is needed, first define recoverable state, history capacity and snapshot frequency.",
+      "reconsider": "Use Memento to restore internal state without exposing its implementation. For large documents, evaluate incremental logs, persistent structures or specialized storage first."
+    },
+    "observer": {
+      "title": "One stock refresh does not need a global event bus",
+      "scenario": "A stock change updates one display on the current page. There are no other independent subscribers.",
+      "excess": "Connect all modules through string events on a global bus, treating in-process notifications as reliable message delivery.",
+      "cost": "Sources, ordering and subscription cleanup are hard to trace. Stale subscriptions cause duplicate updates, and process exits lose unpersisted notifications.",
+      "simpler": "Refresh the display through a callback or shared page state. Use mature messaging infrastructure for cross-process delivery, retries and persistence.",
+      "reconsider": "Use Observer when one publisher genuinely needs multiple independent, dynamically subscribed receivers. Specify unsubscribe, exception and reentrancy behavior."
+    },
+    "state": {
+      "title": "Play and stop do not need a collection of state classes",
+      "scenario": "The player has only playing and stopped states, few events and clear, stable transition rules.",
+      "excess": "Create a class per state plus context and transition objects, scattering transition rules across files.",
+      "cost": "Tracing one click crosses multiple objects. Legal transitions are no longer visible together, and cyclic calls become easier to introduce.",
+      "simpler": "Use an enum and a clear switch to express states and transitions. Test invalid events centrally.",
+      "reconsider": "Use state objects when behavior differs substantially by state and conditions spread across methods. Prefer a mature state-machine library for complex workflows."
+    },
+    "strategy": {
+      "title": "One stable payment method does not need a strategy family",
+      "scenario": "Checkout only accepts cards. No other channel or runtime switching is needed in the near term.",
+      "excess": "Anticipate future channels with a payment strategy interface, factory, registry and several empty implementations.",
+      "cost": "A single payment needs selection and assembly. The interface starts answering requirements that do not exist yet.",
+      "simpler": "Call the card payment function directly. For one or two stable approaches, a clear conditional can also be enough.",
+      "reconsider": "Extract strategies when real wallet or points rules evolve independently and follow the same task contract. Do not force refunds and authorization into one interface just because they concern payment."
+    },
+    "template-method": {
+      "title": "Do not lock an unstable workflow into a base class",
+      "scenario": "CSV and JSON imports are still experimental. Validation, saving and error recovery often happen in different orders.",
+      "excess": "Force both to inherit one importer because method names look similar, then add hooks and switches to bypass the fixed workflow.",
+      "cost": "Subclasses inherit ordering constraints. Changing the base affects every implementation, and multiplying hooks suggests the common skeleton may not exist.",
+      "simpler": "Extract genuinely shared small functions and compose each workflow explicitly. Do not fix an inheritance template prematurely.",
+      "reconsider": "Use Template Method when the read-transform-save skeleton is stable and subclasses replace only a few steps. Use strategies or composition for freely recombined runtime behavior."
+    },
+    "visitor": {
+      "title": "Growing node types make every visitor more expensive",
+      "scenario": "The file tree only needs size calculation, but node types keep growing: links, archives and remote files.",
+      "excess": "Build a visitor protocol for one operation and require every visitor to gain another method whenever a node type is added.",
+      "cost": "Adding an element becomes a cross-file change. Visitors may also demand internal data that breaks node encapsulation.",
+      "simpler": "Keep size calculation on nodes or use language-supported pattern matching. Do not expose all internal representation for visitors.",
+      "reconsider": "Use Visitor when node types are stable but external operations such as statistics and export keep growing. Accept the maintenance cost of introducing a new node type."
+    }
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "start": "Explore the example",
+  "problem": "A real scenario",
+  "think": "Think first",
+  "question": "Where should this change belong?",
+  "principle": "How does it solve the problem?",
+  "benefits": "Why structure it this way?",
+  "tradeoff": "The tradeoff",
+  "suitable": "A good fit",
+  "avoid": "When to skip it",
+  "remember": "Take this picture with you",
+  "related": "Compare related patterns",
+  "next": "Continue learning",
+  "back": "Back to the example",
+  "lab": {
+    "fullCode": "Full code",
+    "label": "Interactive example",
+    "region": "Design pattern interactive example",
+    "done": "Complete. Compare the code and see where the change now belongs.",
+    "note": "These runnable examples omit production validation and concurrency handling."
+  },
+  "node": {
+    "added": "New structure",
+    "changed": "Focus of this step",
+    "stable": "Same responsibility"
+  }
+}

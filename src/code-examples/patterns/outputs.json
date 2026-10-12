@@ -1,0 +1,574 @@
+{
+  "singleton": {
+    "typescript": [
+      "false",
+      "true",
+      "true",
+      "true\ntrue"
+    ],
+    "python": [
+      "False",
+      "True",
+      "True",
+      "True\nTrue"
+    ],
+    "java": [
+      "false",
+      "true",
+      "true",
+      "true\ntrue"
+    ],
+    "go": [
+      "false",
+      "true",
+      "true",
+      "true\ntrue"
+    ]
+  },
+  "factory-method": {
+    "typescript": [
+      "email:hello",
+      "sms:hello",
+      "email:hello",
+      "sms:hello"
+    ],
+    "python": [
+      "email:hello",
+      "sms:hello",
+      "email:hello",
+      "sms:hello"
+    ],
+    "java": [
+      "email:hello",
+      "sms:hello",
+      "email:hello",
+      "sms:hello"
+    ],
+    "go": [
+      "email:hello",
+      "sms:hello",
+      "email:hello",
+      "sms:hello"
+    ]
+  },
+  "abstract-factory": {
+    "typescript": [
+      "light button / light checkbox",
+      "dark button / light checkbox",
+      "light button / light checkbox",
+      "dark button / dark checkbox"
+    ],
+    "python": [
+      "light button / light checkbox",
+      "dark button / light checkbox",
+      "light button / light checkbox",
+      "dark button / dark checkbox"
+    ],
+    "java": [
+      "light button / light checkbox",
+      "dark button / light checkbox",
+      "light button / light checkbox",
+      "dark button / dark checkbox"
+    ],
+    "go": [
+      "light button / light checkbox",
+      "dark button / light checkbox",
+      "light button / light checkbox",
+      "dark button / dark checkbox"
+    ]
+  },
+  "builder": {
+    "typescript": [
+      "{\"format\":\"csv\",\"header\":false,\"compressed\":false}",
+      "{\"format\":\"pdf\",\"header\":true,\"compressed\":true}",
+      "{\"format\":\"pdf\",\"header\":true,\"compressed\":false}",
+      "{\"format\":\"pdf\",\"header\":true,\"compressed\":true}\ntrue"
+    ],
+    "python": [
+      "{'format': 'csv', 'header': False, 'compressed': False}",
+      "{'format': 'pdf', 'header': True, 'compressed': True}",
+      "{'format': 'pdf', 'header': True, 'compressed': False}",
+      "{'format': 'pdf', 'header': True, 'compressed': True}\nTrue"
+    ],
+    "java": [
+      "ExportJob[format=csv, header=false, compressed=false]",
+      "ExportJob[format=pdf, header=true, compressed=true]",
+      "ExportJob[format=pdf, header=true, compressed=false]",
+      "ExportJob[format=pdf, header=true, compressed=true]\ntrue"
+    ],
+    "go": [
+      "{csv false false}",
+      "{pdf true true}",
+      "{pdf true false}",
+      "{pdf true true}\ntrue"
+    ]
+  },
+  "prototype": {
+    "typescript": [
+      "true",
+      "true\nbase,new",
+      "false",
+      "false\nbase\nbase,new"
+    ],
+    "python": [
+      "True",
+      "True\nbase,new",
+      "False",
+      "False\nbase\nbase,new"
+    ],
+    "java": [
+      "true",
+      "true\nbase,new",
+      "false",
+      "false\nbase\nbase,new"
+    ],
+    "go": [
+      "true",
+      "true\nbase,new",
+      "false",
+      "false\nbase\nbase,new"
+    ]
+  },
+  "adapter": {
+    "typescript": [
+      "charged:10",
+      "charged:1000",
+      "charged:1000",
+      "charged:2000"
+    ],
+    "python": [
+      "charged:10",
+      "charged:1000",
+      "charged:1000",
+      "charged:2000"
+    ],
+    "java": [
+      "charged:10",
+      "charged:1000",
+      "charged:1000",
+      "charged:2000"
+    ],
+    "go": [
+      "charged:10",
+      "charged:1000",
+      "charged:1000",
+      "charged:2000"
+    ]
+  },
+  "bridge": {
+    "typescript": [
+      "email:hello",
+      "sms:URGENT hello",
+      "email:hello",
+      "sms:URGENT hello"
+    ],
+    "python": [
+      "email:hello",
+      "sms:URGENT hello",
+      "email:hello",
+      "sms:URGENT hello"
+    ],
+    "java": [
+      "email:hello",
+      "sms:URGENT hello",
+      "email:hello",
+      "sms:URGENT hello"
+    ],
+    "go": [
+      "email:hello",
+      "sms:URGENT hello",
+      "email:hello",
+      "sms:URGENT hello"
+    ]
+  },
+  "composite": {
+    "typescript": [
+      "30",
+      "30",
+      "30",
+      "30"
+    ],
+    "python": [
+      "30",
+      "30",
+      "30",
+      "30"
+    ],
+    "java": [
+      "30",
+      "30",
+      "30",
+      "30"
+    ],
+    "go": [
+      "30",
+      "30",
+      "30",
+      "30"
+    ]
+  },
+  "decorator": {
+    "typescript": [
+      "5",
+      "8",
+      "7",
+      "8"
+    ],
+    "python": [
+      "5",
+      "8",
+      "7",
+      "8"
+    ],
+    "java": [
+      "5",
+      "8",
+      "7",
+      "8"
+    ],
+    "go": [
+      "5",
+      "8",
+      "7",
+      "8"
+    ]
+  },
+  "facade": {
+    "typescript": [
+      "db>cache>log",
+      "db>cache>log\ndb>cache>log",
+      "db>cache>log",
+      "validated>db>cache>log"
+    ],
+    "python": [
+      "db>cache>log",
+      "db>cache>log\ndb>cache>log",
+      "db>cache>log",
+      "validated>db>cache>log"
+    ],
+    "java": [
+      "db>cache>log",
+      "db>cache>log\ndb>cache>log",
+      "db>cache>log",
+      "validated>db>cache>log"
+    ],
+    "go": [
+      "db>cache>log",
+      "db>cache>log\ndb>cache>log",
+      "db>cache>log",
+      "validated>db>cache>log"
+    ]
+  },
+  "flyweight": {
+    "typescript": [
+      "false",
+      "false\nfalse",
+      "true",
+      "true\ntrue\n1,2,3"
+    ],
+    "python": [
+      "False",
+      "False\nFalse",
+      "True",
+      "True\nTrue\n1 2 3"
+    ],
+    "java": [
+      "false",
+      "false\nfalse",
+      "true",
+      "true\ntrue\n1,2,3"
+    ],
+    "go": [
+      "false",
+      "false\nfalse",
+      "true",
+      "true\ntrue\n1,2,3"
+    ]
+  },
+  "proxy": {
+    "typescript": [
+      "image\nloads:1",
+      "loads:1",
+      "loads:0",
+      "loads:0\nimage image\nloads:1"
+    ],
+    "python": [
+      "image\nloads:1",
+      "loads:1",
+      "loads:0",
+      "loads:0\nimage image\nloads:1"
+    ],
+    "java": [
+      "image\nloads:1",
+      "loads:1",
+      "loads:0",
+      "loads:0\nimage image\nloads:1"
+    ],
+    "go": [
+      "image\nloads:1",
+      "loads:1",
+      "loads:0",
+      "loads:0\nimage image\nloads:1"
+    ]
+  },
+  "chain-of-responsibility": {
+    "typescript": [
+      "supervisor",
+      "manager",
+      "supervisor",
+      "manager"
+    ],
+    "python": [
+      "supervisor",
+      "manager",
+      "supervisor",
+      "manager"
+    ],
+    "java": [
+      "supervisor",
+      "manager",
+      "supervisor",
+      "manager"
+    ],
+    "go": [
+      "supervisor",
+      "manager",
+      "supervisor",
+      "manager"
+    ]
+  },
+  "command": {
+    "typescript": [
+      "AB",
+      "A",
+      "AB",
+      "AB\nA"
+    ],
+    "python": [
+      "AB",
+      "A",
+      "AB",
+      "AB\nA"
+    ],
+    "java": [
+      "AB",
+      "A",
+      "AB",
+      "AB\nA"
+    ],
+    "go": [
+      "AB",
+      "A",
+      "AB",
+      "AB\nA"
+    ]
+  },
+  "interpreter": {
+    "typescript": [
+      "true",
+      "true",
+      "true",
+      "true"
+    ],
+    "python": [
+      "True",
+      "True",
+      "True",
+      "True"
+    ],
+    "java": [
+      "true",
+      "true",
+      "true",
+      "true"
+    ],
+    "go": [
+      "true",
+      "true",
+      "true",
+      "true"
+    ]
+  },
+  "iterator": {
+    "typescript": [
+      "A,B,C",
+      "C,B,A",
+      "A,B,C",
+      "C,B,A"
+    ],
+    "python": [
+      "A,B,C",
+      "C,B,A",
+      "A,B,C",
+      "C,B,A"
+    ],
+    "java": [
+      "A,B,C",
+      "C,B,A",
+      "A,B,C",
+      "C,B,A"
+    ],
+    "go": [
+      "A,B,C",
+      "C,B,A",
+      "A,B,C",
+      "C,B,A"
+    ]
+  },
+  "mediator": {
+    "typescript": [
+      "results:book",
+      "results:book\nempty",
+      "results:book",
+      "results:book\nempty"
+    ],
+    "python": [
+      "results:book",
+      "results:book\nempty",
+      "results:book",
+      "results:book\nempty"
+    ],
+    "java": [
+      "results:book",
+      "results:book\nempty",
+      "results:book",
+      "results:book\nempty"
+    ],
+    "go": [
+      "results:book",
+      "results:book\nempty",
+      "results:book",
+      "results:book\nempty"
+    ]
+  },
+  "memento": {
+    "typescript": [
+      "A:1",
+      "A:1\nA:1",
+      "ABC:3",
+      "ABC:3\nA:1"
+    ],
+    "python": [
+      "A:1",
+      "A:1\nA:1",
+      "ABC:3",
+      "ABC:3\nA:1"
+    ],
+    "java": [
+      "A:1",
+      "A:1",
+      "ABC:3",
+      "ABC:3\nA:1"
+    ],
+    "go": [
+      "A:1",
+      "A:1",
+      "ABC:3",
+      "ABC:3\nA:1"
+    ]
+  },
+  "observer": {
+    "typescript": [
+      "display:3",
+      "display:3\nemail:3",
+      "display:3\nemail:3",
+      "email:5"
+    ],
+    "python": [
+      "display:3",
+      "display:3\nemail:3",
+      "display:3\nemail:3",
+      "email:5"
+    ],
+    "java": [
+      "display:3",
+      "display:3\nemail:3",
+      "display:3\nemail:3",
+      "email:5"
+    ],
+    "go": [
+      "display:3",
+      "display:3\nemail:3",
+      "display:3\nemail:3",
+      "email:5"
+    ]
+  },
+  "state": {
+    "typescript": [
+      "playing",
+      "paused",
+      "playing",
+      "paused\nplaying"
+    ],
+    "python": [
+      "playing",
+      "paused",
+      "playing",
+      "paused\nplaying"
+    ],
+    "java": [
+      "playing",
+      "paused",
+      "playing",
+      "paused\nplaying"
+    ],
+    "go": [
+      "playing",
+      "paused",
+      "playing",
+      "paused\nplaying"
+    ]
+  },
+  "template-method": {
+    "typescript": [
+      "saved:A|B",
+      "saved:A|B\nsaved:A|B",
+      "saved:A|B",
+      "saved:A|B"
+    ],
+    "python": [
+      "saved:A|B",
+      "saved:A|B\nsaved:A|B",
+      "saved:A|B",
+      "saved:A|B"
+    ],
+    "java": [
+      "saved:A|B",
+      "saved:A|B\nsaved:A|B",
+      "saved:A|B",
+      "saved:A|B"
+    ],
+    "go": [
+      "saved:A|B",
+      "saved:A|B\nsaved:A|B",
+      "saved:A|B",
+      "saved:A|B"
+    ]
+  },
+  "visitor": {
+    "typescript": [
+      "10",
+      "10\nnotes",
+      "10",
+      "notes"
+    ],
+    "python": [
+      "10",
+      "10\nnotes",
+      "10",
+      "notes"
+    ],
+    "java": [
+      "10",
+      "10\nnotes",
+      "10",
+      "notes"
+    ],
+    "go": [
+      "10",
+      "10\nnotes",
+      "10",
+      "notes"
+    ]
+  }
+}

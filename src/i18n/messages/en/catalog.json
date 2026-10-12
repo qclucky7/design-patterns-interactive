@@ -1,0 +1,165 @@
+{
+  "title": "Understand patterns through the problems they solve.",
+  "animation": {
+    "label": "Four reusable modules rearrange to illustrate flexible design",
+    "next": "Recompose",
+    "pause": "Pause automatic rearrangement",
+    "play": "Start automatic rearrangement",
+    "scenes": [
+      {"title": "Same modules. New possibilities.", "description": "Four familiar blocks, different ways to work together."},
+      {"title": "Share the workflow", "description": "Separate responsibilities. Each module handles its part."},
+      {"title": "Change independently", "description": "Two independent dimensions, combined as needed."},
+      {"title": "Connect the responses", "description": "One change notifies several modules to respond."}
+    ]
+  },
+  "description": "Explore the problem, change the structure, and see why it works. Interactive examples connect each pattern to real code.",
+  "directory": "Pattern directory",
+  "search": "Search patterns",
+  "empty": "No matching patterns",
+  "pending": "Coming soon",
+  "available": "Start learning",
+  "status": "All 23 lessons are ready. Choose a real scenario and explore changes in structure and code.",
+  "onThisPage": "On this page",
+  "menu": "Open directory",
+  "close": "Close directory",
+  "all": "All design patterns",
+  "chapters": [
+    "Overview",
+    "The problem",
+    "Core idea",
+    "Why it works",
+    "When to use",
+    "Takeaway"
+  ],
+  "categories": {
+    "creational": {
+      "name": "Creational",
+      "description": "Separate how objects are created from how they are used."
+    },
+    "structural": {
+      "name": "Structural",
+      "description": "Compose objects into flexible structures."
+    },
+    "behavioral": {
+      "name": "Behavioral",
+      "description": "Distribute responsibilities and coordinate behavior."
+    }
+  },
+  "patterns": {
+    "singleton": {
+      "name": "Singleton",
+      "englishName": "Singleton",
+      "summary": "Provide one shared instance and a single access point."
+    },
+    "factory-method": {
+      "name": "Factory Method",
+      "englishName": "Factory Method",
+      "summary": "Delegate object creation to subclasses."
+    },
+    "abstract-factory": {
+      "name": "Abstract Factory",
+      "englishName": "Abstract Factory",
+      "summary": "Create compatible objects as a consistent family."
+    },
+    "builder": {
+      "name": "Builder",
+      "englishName": "Builder",
+      "summary": "Build complex objects one step at a time."
+    },
+    "prototype": {
+      "name": "Prototype",
+      "englishName": "Prototype",
+      "summary": "Create new objects by copying existing ones."
+    },
+    "adapter": {
+      "name": "Adapter",
+      "englishName": "Adapter",
+      "summary": "Make incompatible interfaces work together."
+    },
+    "bridge": {
+      "name": "Bridge",
+      "englishName": "Bridge",
+      "summary": "Let abstraction and implementation evolve independently."
+    },
+    "composite": {
+      "name": "Composite",
+      "englishName": "Composite",
+      "summary": "Treat individual objects and object trees uniformly."
+    },
+    "decorator": {
+      "name": "Decorator",
+      "englishName": "Decorator",
+      "summary": "Add responsibilities by wrapping an object."
+    },
+    "facade": {
+      "name": "Facade",
+      "englishName": "Facade",
+      "summary": "Offer a simple entry point to a complex subsystem."
+    },
+    "flyweight": {
+      "name": "Flyweight",
+      "englishName": "Flyweight",
+      "summary": "Share repeated state across many similar objects."
+    },
+    "proxy": {
+      "name": "Proxy",
+      "englishName": "Proxy",
+      "summary": "Control access through a stand-in object."
+    },
+    "chain-of-responsibility": {
+      "name": "Chain of Responsibility",
+      "englishName": "Chain of Responsibility",
+      "summary": "Pass a request along a chain of handlers."
+    },
+    "command": {
+      "name": "Command",
+      "englishName": "Command",
+      "summary": "Turn an action into an object for queues and undo."
+    },
+    "interpreter": {
+      "name": "Interpreter",
+      "englishName": "Interpreter",
+      "summary": "Interpret a simple language using expression objects."
+    },
+    "iterator": {
+      "name": "Iterator",
+      "englishName": "Iterator",
+      "summary": "Traverse a collection without exposing its structure."
+    },
+    "mediator": {
+      "name": "Mediator",
+      "englishName": "Mediator",
+      "summary": "Coordinate interactions without direct dependencies."
+    },
+    "memento": {
+      "name": "Memento",
+      "englishName": "Memento",
+      "summary": "Save and restore state without exposing internals."
+    },
+    "observer": {
+      "name": "Observer",
+      "englishName": "Observer",
+      "summary": "Notify subscribers when an object changes."
+    },
+    "state": {
+      "name": "State",
+      "englishName": "State",
+      "summary": "Change behavior by switching state objects."
+    },
+    "strategy": {
+      "name": "Strategy",
+      "englishName": "Strategy",
+      "summary": "Swap algorithms without changing the main workflow."
+    },
+    "template-method": {
+      "name": "Template Method",
+      "englishName": "Template Method",
+      "summary": "Keep an algorithm skeleton and customize its steps."
+    },
+    "visitor": {
+      "name": "Visitor",
+      "englishName": "Visitor",
+      "summary": "Add operations without changing an object structure."
+    }
+  }
+}

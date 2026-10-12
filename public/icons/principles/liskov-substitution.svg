@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Substitute implementations while preserving the same contract</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M8 25H20V9H44V25H56M8 39H20V55H44V39H56"/>
+    <rect x="24" y="2" width="16" height="14" fill="#191d22"/>
+    <rect x="24" y="48" width="16" height="14" fill="#315dce" stroke="#315dce"/>
+    <path d="M26 28H38M26 35H38" stroke="#315dce"/>
+  </g>
+</svg>

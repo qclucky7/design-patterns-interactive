@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>One entry point simplifies access to several subsystems</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M32 22V31M13 43V31H51V43M32 31V43" stroke="#191d22" /><rect x="22" y="7" width="20" height="20" fill="#315dce" /><rect x="7" y="43" width="12" height="12" fill="none" stroke="#191d22" /><rect x="26" y="43" width="12" height="12" fill="none" stroke="#191d22" /><rect x="45" y="43" width="12" height="12" fill="none" stroke="#191d22" />
+  </g>
+</svg>

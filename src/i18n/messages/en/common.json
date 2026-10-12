@@ -1,0 +1,12 @@
+{
+  "siteTitle": "Design Patterns · Design patterns you can see",
+  "siteDescription": "Understand design patterns through real development scenarios, structural animations, and code examples.",
+  "brandName": "Design Patterns",
+  "nav": ["The pattern", "Core idea", "When to use it"],
+  "breadcrumb": ["Design patterns", "Behavioral", "Strategy"],
+  "homeLabel": "Home",
+  "mainNavigationLabel": "Main navigation",
+  "siteLanguageLabel": "Site language",
+  "brandHomeLabel": "Design Patterns home",
+  "searchLabel": "Search site"
+}

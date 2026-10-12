@@ -1,0 +1,159 @@
+{
+  "title": "Design principles",
+  "animation": {
+    "label": "Four modules demonstrate separate responsibilities, extension, abstraction and composition",
+    "next": "Recompose",
+    "pause": "Pause automatic rearrangement",
+    "play": "Start automatic rearrangement",
+    "scenes": [
+      {"title": "Keep responsibilities independent", "description": "Separate responsibilities that change for different reasons."},
+      {"title": "Extend around a stable core", "description": "Add implementations around a stable contract, keeping change at the extension points."},
+      {"title": "Depend on abstractions", "description": "Policy and implementation share a contract so details can be replaced."},
+      {"title": "Compose existing capabilities", "description": "Combine independent modules without growing an inheritance hierarchy."}
+    ]
+  },
+  "description": "Seven object-oriented design principles: SOLID plus two. Learn their purpose and limits through concrete problems and code comparisons.",
+  "patternSection": "Design patterns",
+  "definitionTitle": "Principles are not patterns",
+  "principlesMeaning": "Principles help evaluate responsibilities, dependencies, and collaboration.",
+  "patternsMeaning": "Patterns suggest reusable structures for recurring design problems.",
+  "start": "Start with single responsibility",
+  "search": "Search names or abbreviations",
+  "empty": "No matching design principles",
+  "onThisPage": "On this page",
+  "menu": "Open directory",
+  "close": "Close directory",
+  "groups": {
+    "solid": {
+      "name": "SOLID",
+      "description": "Five principles, from responsibility boundaries to dependency direction."
+    },
+    "structure": {
+      "name": "Reuse and collaboration",
+      "description": "Composition over inheritance and the Law of Demeter: reuse capabilities and reduce unnecessary knowledge."
+    }
+  },
+  "labels": {
+    "problem": "Start with a problem",
+    "meaning": "What the principle means",
+    "why": "Why this design helps",
+    "when": "When to consider it",
+    "caution": "Where to stop",
+    "remember": "Take this with you",
+    "related": "See it in design patterns",
+    "before": "Before",
+    "after": "After",
+    "codeTitle": "See the difference in code",
+    "codeHint": "Illustrative excerpts show responsibilities and dependencies, not a complete executable application.",
+    "codeLanguage": "TypeScript illustration",
+    "relatedPrinciples": "Design principles behind this pattern",
+    "relationHint": "Principles guide judgment. Patterns offer possible implementations."
+  },
+  "entries": {
+    "single-responsibility": {
+      "name": "Single Responsibility Principle",
+      "englishName": "Single Responsibility Principle",
+      "summary": "Separate responsibilities driven by different reasons to change.",
+      "question": "Why does changing an invoice layout touch its calculation?",
+      "scenario": "Invoice calculates totals, formats the document, and saves it. Accounting rules, presentation requests, and storage changes all modify the same class.",
+      "meaning": "Responsibility is about reasons to change, not the number of methods. Separate behavior driven by different stakeholders while keeping behavior that changes together close together.",
+      "why": "Calculations become independently testable. Changing the template or storage no longer requires editing pricing logic, and ownership becomes clearer.",
+      "beforeNote": "Three independent reasons to change share one class.",
+      "afterNote": "Calculation, presentation, and storage are separate. Their composition remains simple without a framework.",
+      "when": "A module repeatedly changes for unrelated business requests, or testing one behavior requires unrelated dependencies.",
+      "caution": "This does not mean one method per class or one line per file. Behavior that changes together usually belongs together.",
+      "remember": "Separate reasons to change, not lines of code.",
+      "connection": "Strategy can isolate replaceable algorithms; Facade can separate orchestration from subsystem responsibilities. Neither is mandatory for establishing a good boundary."
+    },
+    "open-closed": {
+      "name": "Open-Closed Principle",
+      "englishName": "Open-Closed Principle",
+      "summary": "Add behavior through extension points while keeping stable logic intact.",
+      "question": "Does adding points payment require rewriting checkout?",
+      "scenario": "Each payment method adds another branch to pay. Payment options change, but the otherwise stable checkout flow must change with them.",
+      "meaning": "Make identified variations extensible so new behavior can connect without repeatedly editing stable modules. Extension points should follow evidence of change.",
+      "why": "New payment behavior can be developed and tested independently, reducing the impact on existing flows.",
+      "beforeNote": "A new payment option requires editing the branches inside pay.",
+      "afterNote": "pay accepts one contract. A new function adds a payment behavior without changing the stable flow.",
+      "when": "The same variation keeps recurring, such as payment methods, export formats, pricing algorithms, or event handlers.",
+      "caution": "It does not forbid editing code. Bugs, flawed abstractions, and assembly configuration still need changes. Do not anticipate every imaginary variation.",
+      "remember": "Make recurring variation extensible; protect stable flows.",
+      "connection": "Strategy replaces an algorithm, Decorator adds wrapping behavior, and Observer adds subscribers. Each provides a different kind of extension point."
+    },
+    "liskov-substitution": {
+      "name": "Liskov Substitution Principle",
+      "englishName": "Liskov Substitution Principle",
+      "summary": "Replacement implementations must preserve the promised behavior.",
+      "question": "Why does a type-compatible replacement break the caller?",
+      "scenario": "A caller expects a readable and writable Store. ReadOnlyStore implements that interface but throws whenever write is called, breaking the caller's expectation.",
+      "meaning": "A subtype must preserve the properties callers rely on when used in place of its supertype. Matching signatures is insufficient: do not strengthen preconditions or weaken promised results.",
+      "why": "Callers can use a contract without checking every concrete type. Behavioral contract tests make substitutions more trustworthy.",
+      "beforeNote": "A read-only implementation claims it can write but rejects that promise.",
+      "afterNote": "The read-only implementation promises Reader only. Implementations that can actually write may also promise Writer.",
+      "when": "Inheritance, multiple interface implementations, plugins, or test doubles must be interchangeable.",
+      "caution": "Not every exception violates the principle. Check what the shared contract permits. Type compatibility does not replace behavioral tests.",
+      "remember": "Substitute behavioral promises, not just method signatures.",
+      "connection": "Strategy and Proxy both need a shared behavioral contract. A proxy's access checks, results, and exceptions must conform to the contract callers were given."
+    },
+    "interface-segregation": {
+      "name": "Interface Segregation Principle",
+      "englishName": "Interface Segregation Principle",
+      "summary": "Clients depend only on the capabilities they actually need.",
+      "question": "Why must a basic printer implement scanning and fax?",
+      "scenario": "Device bundles printing, scanning, and faxing. A basic printer must implement unsupported operations, making its actual capabilities unclear.",
+      "meaning": "Organize interfaces around coherent client needs. Clients should not depend on methods they do not use. One object can implement several focused interfaces.",
+      "why": "Dependencies become explicit, unrelated capability changes have less impact, and partial implementations need fewer placeholder methods.",
+      "beforeNote": "BasicPrinter satisfies the oversized interface with unsupported-operation errors.",
+      "afterNote": "The printing client requires Printer only. A multifunction device can implement Printer and Scanner.",
+      "when": "An interface keeps growing, implementations contain empty methods, or different clients use small, distinct subsets.",
+      "caution": "Smaller is not always better. Group a meaningful capability instead of creating an interface per method without a real consumer.",
+      "remember": "Shape an interface around its user's needs.",
+      "connection": "Adapter can expose the focused interface a client expects. Bridge can define distinct capability contracts for its two sides."
+    },
+    "dependency-inversion": {
+      "name": "Dependency Inversion Principle",
+      "englishName": "Dependency Inversion Principle",
+      "summary": "Business policy depends on capability contracts, not technical details.",
+      "question": "Why does changing notification channels modify order logic?",
+      "scenario": "OrderService creates EmailSender internally. Switching to SMS or a test double requires editing the business policy.",
+      "meaning": "High-level policy and low-level details should cooperate through abstractions. The abstraction expresses what the policy needs; concrete implementations decide how to provide it.",
+      "why": "Notification implementations can be replaced during assembly. Order behavior can be tested without actually sending email.",
+      "beforeNote": "The policy selects and creates a concrete email implementation.",
+      "afterNote": "The policy depends on Notifier and receives its implementation. Injection is a mechanism; the dependency boundary is the goal.",
+      "when": "Database, network, or messaging details make business behavior hard to replace or expensive to test.",
+      "caution": "Dependency inversion is not identical to dependency injection and does not require a container. Injecting a concrete class alone does not establish a good abstraction.",
+      "remember": "Let technical details serve the policy's contract.",
+      "connection": "Strategy, Bridge, and Abstract Factory can isolate implementations. Merely using one of these patterns does not guarantee a sound dependency direction."
+    },
+    "composition-over-inheritance": {
+      "name": "Composition over Inheritance",
+      "englishName": "Composition over Inheritance",
+      "summary": "Combine capabilities instead of creating a subclass for every combination.",
+      "question": "Why does caching plus signing need yet another report subclass?",
+      "scenario": "Reports can be cached or signed, then need both. Modeling every combination through inheritance steadily multiplies subclasses.",
+      "meaning": "Prefer reusing behavior through composition or aggregation. Hold collaborating objects and delegate to them, assembling capabilities as needed rather than fixing every combination in a hierarchy.",
+      "why": "Caching and signing can be maintained and tested independently, then combined without creating every possible feature subclass.",
+      "beforeNote": "Every feature combination tends to add another subclass.",
+      "afterNote": "Signing and caching become composable wrappers around the same report contract.",
+      "when": "Capabilities vary independently, hierarchies become deep, or combinations cause a rapid increase in subclasses.",
+      "caution": "Inheritance is not forbidden. Stable substitutable type relationships can justify it. Composition also adds delegation and assembly costs.",
+      "remember": "Compose reusable capabilities; inherit only a sound type relationship.",
+      "connection": "Decorator composes wrappers directly; Strategy delegates to replaceable algorithms; Bridge combines two independent dimensions."
+    },
+    "law-of-demeter": {
+      "name": "Law of Demeter",
+      "englishName": "Law of Demeter",
+      "summary": "Talk to direct collaborators without depending on their internal networks.",
+      "question": "Why does reorganizing addresses break shipping code?",
+      "scenario": "Shipping code reads customer.profile.address.city. It knows several internal layers, so restructuring the customer can affect distant callers.",
+      "meaning": "Also called the principle of least knowledge. A module should know the necessary capabilities of its direct collaborators, rather than manipulating a chain of their internals.",
+      "why": "Internal reorganizations have less impact on distant callers, knowledge dependencies shrink, and collaboration boundaries become clearer.",
+      "beforeNote": "The caller depends on three internal object layers for a simple request.",
+      "afterNote": "The caller needs the city capability of ShippingDestination. The implementation owns its internal organization.",
+      "when": "Behavior repeatedly traverses internal object graphs, refactoring requires changing distant callers, or services know too much about one another.",
+      "caution": "Do not mechanically ban every dot or wrap every field of a plain data record. Focus on unnecessary knowledge dependencies between behavior-bearing modules.",
+      "remember": "Ask a collaborator for a capability, not its internal world.",
+      "connection": "Facade offers task-oriented entry points; Mediator coordinates relationships. Neither should become an all-knowing object responsible for everything."
+    }
+  }
+}

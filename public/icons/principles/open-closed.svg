@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Extend around a stable core without changing it</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="8" y="22" width="20" height="20" fill="#191d22"/>
+    <path d="M28 32H39V14H45M39 32V50H45"/>
+    <rect x="45" y="8" width="12" height="12"/>
+    <rect x="45" y="44" width="12" height="12" stroke="#315dce" stroke-dasharray="3 3"/>
+    <path d="M48 50H54M51 47V53" stroke="#315dce"/>
+  </g>
+</svg>

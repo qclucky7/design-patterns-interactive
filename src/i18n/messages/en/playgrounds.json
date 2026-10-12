@@ -1,0 +1,383 @@
+{
+  "walkthrough": "Compare structural changes and full code",
+  "reset": "Reset example",
+  "patterns": {
+    "singleton": {
+      "title": "Are these the same object?",
+      "instruction": "Retrieve settings for the cart and job, then change a shared flag.",
+      "controls": {
+        "cart": "Retrieve for cart",
+        "job": "Retrieve for job",
+        "toggle": "Toggle sale flag"
+      },
+      "labels": {
+        "cart": "Cart reference",
+        "job": "Job reference",
+        "instance": "Shared instance",
+        "flag": "Sale flag",
+        "waiting": "Not retrieved",
+        "on": "On",
+        "off": "Off",
+        "same": "Both references point to the same object"
+      },
+      "explanation": "More retrievals do not create more instances; both entries read the same state."
+    },
+    "factory-method": {
+      "title": "Change the product, keep the workflow",
+      "instruction": "Choose a creator and send a message. Watch which step changes.",
+      "controls": {
+        "email": "Email",
+        "sms": "SMS",
+        "send": "Send notification"
+      },
+      "labels": {
+        "prepare": "Prepare text",
+        "create": "Factory method creates a product",
+        "send": "Send",
+        "product": "Current product",
+        "idle": "Ready to send"
+      },
+      "explanation": "The factory method returns a different product; the common workflow is reused."
+    },
+    "abstract-factory": {
+      "title": "Replace a whole product family",
+      "instruction": "Switch factories and watch both widgets change together.",
+      "controls": {
+        "light": "Light theme",
+        "dark": "Dark theme"
+      },
+      "labels": {
+        "factory": "Selected factory",
+        "button": "Button product",
+        "checkbox": "Checkbox product",
+        "sample": "Confirm",
+        "select": "Select this item"
+      },
+      "explanation": "One factory choice supplies a compatible family, not independently selected widgets."
+    },
+    "builder": {
+      "title": "Build an export job",
+      "instruction": "Choose options and build. Later configuration edits leave the built result intact.",
+      "controls": {
+        "format": "Format",
+        "header": "Include header",
+        "compress": "Compress",
+        "build": "Build task"
+      },
+      "labels": {
+        "draft": "Editable draft",
+        "built": "Built task",
+        "empty": "Not built",
+        "enabled": "Enabled",
+        "disabled": "Disabled"
+      },
+      "explanation": "The builder holds configuration; build delivers an independent result. Chaining is not the key."
+    },
+    "prototype": {
+      "title": "Does editing the copy change the template?",
+      "instruction": "Try a shallow copy or prototype clone, then edit the copy's tags.",
+      "controls": {
+        "shallow": "Copy shared tags",
+        "clone": "Copy independent tags",
+        "edit": "Add a tag to the copy",
+        "reset": "Reset template"
+      },
+      "labels": {
+        "template": "Template",
+        "copy": "Copy",
+        "tags": "Tags",
+        "empty": "Create a copy first",
+        "shared": "Shared list",
+        "independent": "Independent lists"
+      },
+      "explanation": "A shallow copy shares nested references; clone duplicates the tag list that must be independent."
+    },
+    "adapter": {
+      "title": "Follow the amount conversion",
+      "instruction": "Change the app amount and watch the adapter convert it to SDK cents.",
+      "controls": {
+        "amount": "Amount in major units"
+      },
+      "labels": {
+        "business": "App calls pay",
+        "adapter": "Adapter ×100",
+        "sdk": "SDK calls charge",
+        "yuan": "Major units",
+        "cents": "Cents"
+      },
+      "explanation": "Conversion stays at the boundary; the caller need not know SDK units."
+    },
+    "bridge": {
+      "title": "Combine two independent dimensions",
+      "instruction": "Choose message form and transport independently to try all four combinations.",
+      "controls": {
+        "normal": "Normal",
+        "urgent": "Urgent",
+        "email": "Email",
+        "sms": "SMS"
+      },
+      "labels": {
+        "form": "Message form",
+        "channel": "Transport",
+        "message": "Message preview",
+        "hello": "Order confirmed",
+        "urgent": "Urgent"
+      },
+      "explanation": "Message form and transport evolve independently without a class for every combination."
+    },
+    "composite": {
+      "title": "Nest a bundle and keep totaling",
+      "instruction": "Add an item or wrap the current bundle in another bundle.",
+      "controls": {
+        "add": "Add item 10",
+        "nest": "Wrap in another bundle",
+        "reset": "Reset tree"
+      },
+      "labels": {
+        "bundle": "Bundle",
+        "item": "Item",
+        "total": "Recursive total",
+        "depth": "Nesting depth"
+      },
+      "explanation": "Leaves return prices; composites sum children. The caller always uses total."
+    },
+    "decorator": {
+      "title": "Layer toppings",
+      "instruction": "Add milk and sugar and watch the wrapper order and price.",
+      "controls": {
+        "milk": "Add milk +2",
+        "sugar": "Add sugar +1",
+        "remove": "Remove outer layer",
+        "reset": "Plain coffee"
+      },
+      "labels": {
+        "coffee": "Plain coffee",
+        "milk": "Milk",
+        "sugar": "Sugar",
+        "cost": "Final cost",
+        "delegates": "Delegate inward, then add"
+      },
+      "explanation": "Each wrapper keeps the interface, delegates inward and adds its responsibility."
+    },
+    "facade": {
+      "title": "One startup entry, three subsystems",
+      "instruction": "Start through the facade and watch ordered coordination.",
+      "controls": {
+        "start": "Start system",
+        "reset": "Reset startup"
+      },
+      "labels": {
+        "db": "Connect database",
+        "cache": "Start cache",
+        "log": "Open logger",
+        "waiting": "Waiting",
+        "done": "Done",
+        "facade": "Startup facade"
+      },
+      "explanation": "One entry coordinates subsystems for the caller; the subsystems still exist."
+    },
+    "flyweight": {
+      "title": "Plant trees, reuse types",
+      "instruction": "Select a species and plant trees; compare instance count with type count.",
+      "controls": {
+        "oak": "Oak",
+        "pine": "Pine",
+        "plant": "Plant a tree",
+        "reset": "Clear map"
+      },
+      "labels": {
+        "trees": "Tree instances",
+        "types": "Shared type objects",
+        "position": "Position"
+      },
+      "explanation": "Positions belong to individual trees; matching trees share intrinsic type data."
+    },
+    "proxy": {
+      "title": "Create now, load on display",
+      "instruction": "Create the proxy, then display repeatedly and watch actual load count.",
+      "controls": {
+        "create": "Create proxy",
+        "display": "Display image",
+        "reset": "Reset resource"
+      },
+      "labels": {
+        "proxy": "Image proxy",
+        "real": "Real image",
+        "loads": "Real loads",
+        "displays": "Displays",
+        "empty": "Not created",
+        "pending": "Waiting for first display",
+        "loaded": "Loaded and reused"
+      },
+      "explanation": "The proxy controls construction timing; repeated displays cause one load."
+    },
+    "chain-of-responsibility": {
+      "title": "Who handles this ticket?",
+      "instruction": "Choose an amount and submit at the head. Requests beyond all limits must be unhandled.",
+      "controls": {
+        "amount": "Refund amount",
+        "submit": "Submit ticket"
+      },
+      "labels": {
+        "agent": "Agent ≤100",
+        "supervisor": "Supervisor ≤1000",
+        "manager": "Manager ≤5000",
+        "result": "Outcome",
+        "pending": "Not submitted",
+        "unhandled": "Unhandled"
+      },
+      "explanation": "The first capable handler accepts the request; later handlers are not called."
+    },
+    "command": {
+      "title": "Execute, then undo",
+      "instruction": "Turn input into an insertion command and inspect text and history.",
+      "controls": {
+        "text": "Text to insert",
+        "execute": "Insert text",
+        "undo": "Undo insertion"
+      },
+      "labels": {
+        "editor": "Editor text",
+        "history": "Undo history",
+        "empty": "Nothing to undo"
+      },
+      "explanation": "A command retains its request and undo state; history restores the prior text."
+    },
+    "interpreter": {
+      "title": "Eligible for the offer?",
+      "instruction": "Change age and membership and watch both leaves and AND evaluate.",
+      "controls": {
+        "age": "Age",
+        "member": "Member"
+      },
+      "labels": {
+        "age": "Age >18",
+        "member": "Membership",
+        "and": "Both conditions satisfied",
+        "yes": "True",
+        "no": "False"
+      },
+      "explanation": "Terminals read context; AND combines children recursively. This is a manually constructed AST."
+    },
+    "iterator": {
+      "title": "Walk a playlist one item at a time",
+      "instruction": "Choose direction and fetch one item at a time. The collection does not change.",
+      "controls": {
+        "forward": "Forward",
+        "reverse": "Reverse",
+        "next": "Read next song",
+        "reset": "Start reading again"
+      },
+      "labels": {
+        "collection": "Collection",
+        "cursor": "Items read",
+        "value": "Yielded song",
+        "empty": "No value yet",
+        "end": "Traversal complete"
+      },
+      "explanation": "Traversal order and cursor belong to the iterator, not a caller's index loop."
+    },
+    "mediator": {
+      "title": "One event coordinates two controls",
+      "instruction": "Type a query, then clear it and inspect coordination events.",
+      "controls": {
+        "query": "Search query",
+        "clear": "Click clear"
+      },
+      "labels": {
+        "search": "Search box",
+        "results": "Search results",
+        "mediator": "Coordination",
+        "empty": "Empty results"
+      },
+      "explanation": "Widgets report events; the mediator updates others without direct widget calls."
+    },
+    "memento": {
+      "title": "Save a moment and restore it",
+      "instruction": "Edit and save a snapshot, continue editing, then choose a snapshot to restore.",
+      "controls": {
+        "text": "Current text",
+        "save": "Save snapshot",
+        "restore": "Restore this snapshot"
+      },
+      "labels": {
+        "current": "Editor state",
+        "history": "Snapshot timeline",
+        "cursor": "Cursor",
+        "empty": "No snapshots yet"
+      },
+      "explanation": "A snapshot stores state, not actions, and retains its text and cursor."
+    },
+    "observer": {
+      "title": "Subscribers receive notifications",
+      "instruction": "Select subscribers and change stock; unsubscribed listeners must stop receiving events.",
+      "controls": {
+        "display": "Display subscription",
+        "email": "Email subscription",
+        "publish": "Stock +1 and notify",
+        "reset": "Clear notifications"
+      },
+      "labels": {
+        "stock": "Current stock",
+        "display": "Display received",
+        "email": "Email received",
+        "none": "No event",
+        "subscribed": "Subscribed",
+        "unsubscribed": "Unsubscribed"
+      },
+      "explanation": "The publisher visits current subscribers. Unsubscribing stops future events, not past records."
+    },
+    "state": {
+      "title": "Same button, different state",
+      "instruction": "Click the player: start from stopped, pause while playing, resume from paused.",
+      "controls": {
+        "click": "Play / pause",
+        "stop": "Stop"
+      },
+      "labels": {
+        "stopped": "Stopped",
+        "playing": "Playing",
+        "paused": "Paused",
+        "current": "Current state",
+        "transitions": "Transition history"
+      },
+      "explanation": "The current state determines both behavior and the next transition."
+    },
+    "template-method": {
+      "title": "Replace a step, keep the skeleton",
+      "instruction": "Choose an input format; read and save stay fixed while transformation changes.",
+      "controls": {
+        "csv": "CSV input",
+        "json": "JSON input",
+        "run": "Run import"
+      },
+      "labels": {
+        "read": "Read",
+        "transform": "Transform",
+        "save": "Save",
+        "source": "Input",
+        "output": "Saved result",
+        "waiting": "Not executed"
+      },
+      "explanation": "A subclass replaces transformation; the base owns the read-transform-save order."
+    },
+    "visitor": {
+      "title": "One tree, two visiting operations",
+      "instruction": "Switch between size and name export without changing the element structure.",
+      "controls": {
+        "size": "Calculate total size",
+        "names": "Export file names",
+        "visit": "Run operation"
+      },
+      "labels": {
+        "tree": "File structure",
+        "folder": "Folder",
+        "file": "Text file",
+        "operation": "Operation",
+        "result": "Result",
+        "empty": "Not visited"
+      },
+      "explanation": "accept dispatches concrete elements to a visitor; a new operation does not edit every node."
+    }
+  }
+}

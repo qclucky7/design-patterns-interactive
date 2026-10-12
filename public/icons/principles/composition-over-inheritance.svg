@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Combine reusable modules instead of growing an inheritance hierarchy</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="7" y="7" width="50" height="50"/>
+    <rect x="16" y="16" width="13" height="13" fill="#191d22"/>
+    <rect x="35" y="16" width="13" height="13" fill="#315dce" stroke="#315dce"/>
+    <rect x="16" y="35" width="13" height="13"/>
+    <rect x="35" y="35" width="13" height="13"/>
+    <path d="M29 22H35M22 29V35M41 29V35M29 41H35"/>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>Wrappers add behavior around an unchanged core</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="8" y="8" width="48" height="48" stroke="#191d22" /><rect x="17" y="17" width="30" height="30" stroke="#315dce" /><rect x="25" y="25" width="14" height="14" fill="#191d22" /><path d="M8 32H17M47 32H56" stroke="#315dce" />
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>A stable context selects an interchangeable algorithm</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <path d="M23 32H34V16H44" stroke="#315dce" /><path d="M34 32H44M34 32V48H44" stroke="#191d22" stroke-dasharray="3 4" /><rect x="7" y="24" width="16" height="16" fill="#191d22" /><rect x="44" y="10" width="12" height="12" fill="#315dce" /><rect x="44" y="26" width="12" height="12" fill="none" stroke="#191d22" /><rect x="44" y="42" width="12" height="12" fill="none" stroke="#191d22" />
+  </g>
+</svg>

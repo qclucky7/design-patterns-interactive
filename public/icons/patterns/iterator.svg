@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>A cursor traverses items without exposing the collection</desc>
+  <g fill="none" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="7" y="23" width="50" height="24" stroke="#191d22" /><rect x="12" y="30" width="10" height="10" fill="none" stroke="#191d22" /><rect x="27" y="30" width="10" height="10" fill="#315dce" /><rect x="42" y="30" width="10" height="10" fill="none" stroke="#191d22" /><path d="M11 13H32V21M27 16L32 21L37 16" stroke="#315dce" />
+  </g>
+</svg>

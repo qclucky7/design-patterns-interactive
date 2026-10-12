@@ -1,0 +1,645 @@
+{
+  "adapter": {
+    "scenario": "Checkout expects pay(amount), but a legacy SDK exposes charge(cents).",
+    "request": "Reuse the legacy SDK while the app keeps amounts in major units.",
+    "problem": "Names and units differ. Editing every caller leaks SDK details into business code.",
+    "solution": "Implement pay in an adapter, convert major units to cents and delegate to the SDK. The adapter changes the interface, not the business responsibility. Production money needs exact arithmetic and rounding policies.",
+    "benefits": [
+      "Reuse the old component.",
+      "Keep translation at the boundary.",
+      "Hide third-party interface details."
+    ],
+    "when": "Use it for an unmodifiable component with matching behavior but an incompatible interface.",
+    "avoid": "Do not disguise different semantics by renaming methods. Align editable interfaces directly.",
+    "tradeoff": "An extra delegation layer requires tests for units, errors and formats.",
+    "remember": "Translate at the boundary while both sides retain their interfaces.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Payment interfaces differ",
+        "title": "Payment interfaces differ",
+        "description": "Checkout expects pay(amount), but a legacy SDK exposes charge(cents).",
+        "insight": "Names and units differ. Editing every caller leaks SDK details into business code.",
+        "action": "Call the SDK directly",
+        "graphNote": "The SDK interprets 10 as 10 cents.",
+        "codeNote": "The SDK interprets 10 as 10 cents."
+      },
+      {
+        "number": "02",
+        "label": "Caller learns about cents",
+        "title": "Caller learns about cents",
+        "description": "Reuse the legacy SDK while the app keeps amounts in major units.",
+        "insight": "Names and units differ. Editing every caller leaks SDK details into business code.",
+        "action": "Add a payment adapter",
+        "graphNote": "The caller multiplies by 100 and learns SDK units.",
+        "codeNote": "The caller multiplies by 100 and learns SDK units."
+      },
+      {
+        "number": "03",
+        "label": "Translate at the boundary",
+        "title": "Translate at the boundary",
+        "description": "Implement pay in an adapter, convert major units to cents and delegate to the SDK.",
+        "insight": "Implement pay in an adapter, convert major units to cents and delegate to the SDK. The adapter changes the interface, not the business responsibility. Production money needs exact arithmetic and rounding policies.",
+        "action": "Pay through the app interface",
+        "graphNote": "Move amount conversion into the adapter.",
+        "codeNote": "Move amount conversion into the adapter."
+      },
+      {
+        "number": "04",
+        "label": "Business only calls pay",
+        "title": "Business only calls pay",
+        "description": "Translate at the boundary while both sides retain their interfaces.",
+        "insight": "An extra delegation layer requires tests for units, errors and formats.",
+        "action": "Start again",
+        "graphNote": "Business passes major units; the adapter converts to cents.",
+        "codeNote": "Business passes major units; the adapter converts to cents."
+      }
+    ],
+    "labels": {
+      "checkout": "Checkout",
+      "sdk": "SDK · charge",
+      "convert": "Unit conversion",
+      "adapter": "Adapter · pay"
+    },
+    "annotations": [
+      {},
+      {
+        "checkout": "Same responsibility",
+        "convert": "Focus of this step",
+        "sdk": "Same responsibility"
+      },
+      {
+        "checkout": "Same responsibility",
+        "adapter": "Focus of this step",
+        "sdk": "Same responsibility"
+      },
+      {
+        "checkout": "Same responsibility",
+        "adapter": "Focus of this step",
+        "sdk": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Adapt interfaces, not responsibilities",
+    "keyIdeas": [
+      "The caller owns the target interface; the reused component owns its old interface.",
+      "The adapter translates names, units and formats at their boundary."
+    ],
+    "distinction": "Adapter reconciles existing incompatibility; Bridge separates independent dimensions by design."
+  },
+  "bridge": {
+    "scenario": "Messages have normal and urgent forms, with email and SMS delivery.",
+    "request": "Add urgent messages while retaining both channels.",
+    "problem": "A class per message/channel combination multiplies types and duplicates combinations.",
+    "solution": "A message abstraction holds a sender interface. Normal and urgent messages shape content; email and SMS senders handle delivery. Composition connects the hierarchies so each dimension evolves independently.",
+    "benefits": [
+      "Avoid multiplying classes for every combination.",
+      "Test content and transport separately.",
+      "Select combinations at runtime."
+    ],
+    "when": "Use it for two genuinely independent dimensions, such as message form and transport.",
+    "avoid": "With one varying dimension, a simple interface or strategy is enough.",
+    "tradeoff": "The bridge interface must be stable; poor boundaries leak details between hierarchies.",
+    "remember": "Let two dimensions grow independently and connect them through composition.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Implement each combination",
+        "title": "Implement each combination",
+        "description": "Messages have normal and urgent forms, with email and SMS delivery.",
+        "insight": "A class per message/channel combination multiplies types and duplicates combinations.",
+        "action": "Add urgency",
+        "graphNote": "Message form and transport are tied together.",
+        "codeNote": "Message form and transport are tied together."
+      },
+      {
+        "number": "02",
+        "label": "Urgency adds combination types",
+        "title": "Urgency adds combination types",
+        "description": "Add urgent messages while retaining both channels.",
+        "insight": "A class per message/channel combination multiplies types and duplicates combinations.",
+        "action": "Separate the dimensions",
+        "graphNote": "Urgency adds a combination class for each channel.",
+        "codeNote": "Urgency adds a combination class for each channel."
+      },
+      {
+        "number": "03",
+        "label": "Bridge messages to senders",
+        "title": "Bridge messages to senders",
+        "description": "A message abstraction holds a sender interface.",
+        "insight": "A message abstraction holds a sender interface. Normal and urgent messages shape content; email and SMS senders handle delivery. Composition connects the hierarchies so each dimension evolves independently.",
+        "action": "Compose urgent SMS",
+        "graphNote": "A message holds a sender interface, separating responsibilities.",
+        "codeNote": "A message holds a sender interface, separating responsibilities."
+      },
+      {
+        "number": "04",
+        "label": "Compose urgent SMS",
+        "title": "Compose urgent SMS",
+        "description": "Let two dimensions grow independently and connect them through composition.",
+        "insight": "The bridge interface must be stable; poor boundaries leak details between hierarchies.",
+        "action": "Start again",
+        "graphNote": "Compose urgency with SMS without editing other combinations.",
+        "codeNote": "Compose urgency with SMS without editing other combinations."
+      }
+    ],
+    "labels": {
+      "normal": "Normal message",
+      "urgent": "Urgent message",
+      "email": "Email channel",
+      "sms": "SMS channel",
+      "combo": "Combination types",
+      "sender": "Sender interface"
+    },
+    "annotations": [
+      {},
+      {
+        "normal": "Same responsibility",
+        "combo": "Focus of this step",
+        "urgent": "New structure",
+        "email": "Same responsibility",
+        "sms": "New structure"
+      },
+      {
+        "normal": "Same responsibility",
+        "sender": "Focus of this step",
+        "email": "Same responsibility",
+        "sms": "Same responsibility"
+      },
+      {
+        "urgent": "Focus of this step",
+        "sender": "Same responsibility",
+        "sms": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Separate multiplied variation into two axes",
+    "keyIdeas": [
+      "The abstraction defines message intent; the implementation defines transport.",
+      "An abstraction holds an implementation interface rather than enumerating combinations."
+    ],
+    "distinction": "Strategy usually replaces one algorithm; Bridge connects two independently growing hierarchies."
+  },
+  "composite": {
+    "scenario": "A basket contains individual items and bundles of items.",
+    "request": "Nest a bundle inside another bundle and calculate the total uniformly.",
+    "problem": "The caller distinguishes leaves from containers and handwrites loops for each nesting level.",
+    "solution": "Items and bundles share total. An item returns its price; a bundle recursively sums its children's totals. A tree exposes parts and wholes through the same operation.",
+    "benefits": [
+      "Operate on leaves and composites uniformly.",
+      "Handle arbitrary depth through recursion.",
+      "Add nesting without changing the caller."
+    ],
+    "when": "Use it for natural part/whole trees such as menus, directories and component hierarchies.",
+    "avoid": "Cycles or shared graph nodes need more than tree recursion. Avoid forcing unrelated leaf and container responsibilities together.",
+    "tradeoff": "A uniform interface may hide important distinctions. Validate children and prevent cycles.",
+    "remember": "One item and a whole bundle both expose one total operation.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Calculate items and bundles separately",
+        "title": "Calculate items and bundles separately",
+        "description": "A basket contains individual items and bundles of items.",
+        "insight": "The caller distinguishes leaves from containers and handwrites loops for each nesting level.",
+        "action": "Nest another bundle",
+        "graphNote": "The caller sums individual prices.",
+        "codeNote": "The caller sums individual prices."
+      },
+      {
+        "number": "02",
+        "label": "Nesting adds special cases",
+        "title": "Nesting adds special cases",
+        "description": "Nest a bundle inside another bundle and calculate the total uniformly.",
+        "insight": "The caller distinguishes leaves from containers and handwrites loops for each nesting level.",
+        "action": "Unify the total interface",
+        "graphNote": "A nested bundle adds a special traversal branch.",
+        "codeNote": "A nested bundle adds a special traversal branch."
+      },
+      {
+        "number": "03",
+        "label": "Share a component interface",
+        "title": "Share a component interface",
+        "description": "Items and bundles share total.",
+        "insight": "Items and bundles share total. An item returns its price; a bundle recursively sums its children's totals. A tree exposes parts and wholes through the same operation.",
+        "action": "Total the entire tree",
+        "graphNote": "Items and bundles both provide total.",
+        "codeNote": "Items and bundles both provide total."
+      },
+      {
+        "number": "04",
+        "label": "Calculate nested totals recursively",
+        "title": "Calculate nested totals recursively",
+        "description": "One item and a whole bundle both expose one total operation.",
+        "insight": "A uniform interface may hide important distinctions. Validate children and prevent cycles.",
+        "action": "Start again",
+        "graphNote": "The shared operation totals nested bundles recursively; the sample remains 30.",
+        "codeNote": "The shared operation totals nested bundles recursively; the sample remains 30."
+      }
+    ],
+    "labels": {
+      "caller": "Total caller",
+      "bundle": "Bundle",
+      "nested": "Nested bundle",
+      "item": "Item 10",
+      "other": "Item 20",
+      "component": "Shared total"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "bundle": "Focus of this step",
+        "nested": "New structure",
+        "item": "Same responsibility",
+        "other": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "component": "Focus of this step",
+        "bundle": "Same responsibility",
+        "item": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "bundle": "Same responsibility",
+        "nested": "Focus of this step",
+        "item": "Same responsibility",
+        "other": "New structure"
+      }
+    ],
+    "principleTitle": "Parts and wholes expose the same operation",
+    "keyIdeas": [
+      "A leaf performs its own work; a composite recursively delegates the same operation.",
+      "Nesting depth belongs to the structure, not to caller-side branches."
+    ],
+    "distinction": "Composite organizes a tree; Decorator typically builds a wrapper chain. Cyclic graphs need additional traversal policies."
+  },
+  "decorator": {
+    "scenario": "Coffee has a base price and optional milk or sugar.",
+    "request": "Combine milk and sugar, with more toppings to follow.",
+    "problem": "Subclassing every topping combination explodes the type count. Putting every option in the base class keeps expanding its responsibility.",
+    "solution": "Coffee and decorators share cost. Each decorator wraps a coffee, delegates to it and adds its own price. Layer milk and sugar without editing the base coffee.",
+    "benefits": [
+      "Compose responsibilities without enumerating combinations.",
+      "Preserve the wrapped object and common interface.",
+      "Add toppings as independent decorators."
+    ],
+    "when": "Use it to layer combinable responsibilities at runtime.",
+    "avoid": "Define rules before layering tightly coupled responsibilities or order-sensitive side effects.",
+    "tradeoff": "Nested wrappers complicate debugging and identity checks. Order can affect behavior.",
+    "remember": "Keep the interface and wrap new responsibilities around it.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Price a plain coffee",
+        "title": "Price a plain coffee",
+        "description": "Coffee has a base price and optional milk or sugar.",
+        "insight": "Subclassing every topping combination explodes the type count. Putting every option in the base class keeps expanding its responsibility.",
+        "action": "Add topping combinations",
+        "graphNote": "Plain coffee costs 5.",
+        "codeNote": "Plain coffee costs 5."
+      },
+      {
+        "number": "02",
+        "label": "Add a class for each combination",
+        "title": "Add a class for each combination",
+        "description": "Combine milk and sugar, with more toppings to follow.",
+        "insight": "Subclassing every topping combination explodes the type count. Putting every option in the base class keeps expanding its responsibility.",
+        "action": "Decorate with milk",
+        "graphNote": "A combination subclass represents milk and sugar, totaling 8.",
+        "codeNote": "A combination subclass represents milk and sugar, totaling 8."
+      },
+      {
+        "number": "03",
+        "label": "Wrap coffee with milk",
+        "title": "Wrap coffee with milk",
+        "description": "Coffee and decorators share cost.",
+        "insight": "Coffee and decorators share cost. Each decorator wraps a coffee, delegates to it and adds its own price. Layer milk and sugar without editing the base coffee.",
+        "action": "Add sugar",
+        "graphNote": "Milk delegates to coffee and adds 2.",
+        "codeNote": "Milk delegates to coffee and adds 2."
+      },
+      {
+        "number": "04",
+        "label": "Add a sugar wrapper",
+        "title": "Add a sugar wrapper",
+        "description": "Keep the interface and wrap new responsibilities around it.",
+        "insight": "Nested wrappers complicate debugging and identity checks. Order can affect behavior.",
+        "action": "Start again",
+        "graphNote": "Sugar wraps milk and adds 1, totaling 8.",
+        "codeNote": "Sugar wraps milk and adds 1, totaling 8."
+      }
+    ],
+    "labels": {
+      "caller": "Order",
+      "coffee": "Plain coffee",
+      "combo": "Combination class",
+      "milk": "Milk decorator",
+      "sugar": "Sugar decorator"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "combo": "Focus of this step",
+        "coffee": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "milk": "Focus of this step",
+        "coffee": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "sugar": "Focus of this step",
+        "milk": "Same responsibility",
+        "coffee": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Layer responsibilities without changing the interface",
+    "keyIdeas": [
+      "A decorator preserves the wrapped interface, so callers retain the same capability.",
+      "Delegation order is part of the behavioral contract."
+    ],
+    "distinction": "Proxy controls access; Decorator adds responsibilities. Their shapes are similar but their intent differs."
+  },
+  "facade": {
+    "scenario": "Startup must connect a database, start the cache and open a logger in order.",
+    "request": "Reuse startup from multiple entry points and add validation.",
+    "problem": "Every caller must know subsystem details and ordering; duplicated orchestration omits steps.",
+    "solution": "A startup facade exposes start and coordinates database, cache and logger internally. Callers express intent; subsystems remain independently accessible.",
+    "benefits": [
+      "Callers depend on a small entry point.",
+      "Centralize ordering and prevent omissions.",
+      "Contain subsystem changes behind the facade."
+    ],
+    "when": "Use it when a common task coordinates several complex subsystems.",
+    "avoid": "Skip it for an already simple object. Do not turn the facade into a giant business layer.",
+    "tradeoff": "Split facades by task and handle failure and rollback explicitly.",
+    "remember": "Offer one simple entry point without removing the underlying structure.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Caller coordinates three components",
+        "title": "Caller coordinates three components",
+        "description": "Startup must connect a database, start the cache and open a logger in order.",
+        "insight": "Every caller must know subsystem details and ordering; duplicated orchestration omits steps.",
+        "action": "Add another entry point",
+        "graphNote": "The caller orders database, cache and log setup.",
+        "codeNote": "The caller orders database, cache and log setup."
+      },
+      {
+        "number": "02",
+        "label": "Another entry repeats startup",
+        "title": "Another entry repeats startup",
+        "description": "Reuse startup from multiple entry points and add validation.",
+        "insight": "Every caller must know subsystem details and ordering; duplicated orchestration omits steps.",
+        "action": "Extract a startup facade",
+        "graphNote": "Another entry repeats the same orchestration.",
+        "codeNote": "Another entry repeats the same orchestration."
+      },
+      {
+        "number": "03",
+        "label": "One entry encapsulates orchestration",
+        "title": "One entry encapsulates orchestration",
+        "description": "A startup facade exposes start and coordinates database, cache and logger internally.",
+        "insight": "A startup facade exposes start and coordinates database, cache and logger internally. Callers express intent; subsystems remain independently accessible.",
+        "action": "Add startup validation",
+        "graphNote": "The caller invokes only the startup facade.",
+        "codeNote": "The caller invokes only the startup facade."
+      },
+      {
+        "number": "04",
+        "label": "Validate inside the facade",
+        "title": "Validate inside the facade",
+        "description": "Offer one simple entry point without removing the underlying structure.",
+        "insight": "Split facades by task and handle failure and rollback explicitly.",
+        "action": "Start again",
+        "graphNote": "Validation joins the facade while callers retain one entry point.",
+        "codeNote": "Validation joins the facade while callers retain one entry point."
+      }
+    ],
+    "labels": {
+      "caller": "Startup caller",
+      "other": "Other entry",
+      "db": "Database",
+      "cache": "Cache",
+      "log": "Logger",
+      "facade": "Startup facade",
+      "validate": "Validation"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "db": "Same responsibility",
+        "cache": "Same responsibility",
+        "log": "Same responsibility",
+        "other": "Focus of this step"
+      },
+      {
+        "caller": "Same responsibility",
+        "facade": "Focus of this step",
+        "db": "Same responsibility",
+        "cache": "Same responsibility",
+        "log": "Same responsibility"
+      },
+      {
+        "caller": "Same responsibility",
+        "facade": "Same responsibility",
+        "validate": "Focus of this step",
+        "db": "Same responsibility",
+        "cache": "Same responsibility",
+        "log": "Same responsibility"
+      }
+    ],
+    "principleTitle": "Turn complex coordination into one task entry",
+    "keyIdeas": [
+      "The facade knows subsystem ordering; callers express high-level intent.",
+      "Subsystems remain independently accessible; simplifying access does not remove capabilities."
+    ],
+    "distinction": "Adapter translates an incompatible interface; Facade offers a higher-level entry for subsystem coordination."
+  },
+  "flyweight": {
+    "scenario": "Many map trees duplicate species and color while their positions differ.",
+    "request": "Add more trees without duplicating identical species data.",
+    "problem": "Combining immutable type data with per-instance positions duplicates state as the count grows.",
+    "solution": "Store species and color as immutable intrinsic state in TreeType. A factory caches by the full intrinsic-state key; each Tree retains a type reference and its extrinsic position. The example verifies sharing rather than claiming measured memory savings.",
+    "benefits": [
+      "Store identical intrinsic state once.",
+      "Keep extrinsic state independent per instance.",
+      "A factory manages reuse consistently."
+    ],
+    "when": "Use it for many instances with substantial safely shareable state and measured memory pressure.",
+    "avoid": "Skip it for few objects or frequently changing shared state.",
+    "tradeoff": "Split state carefully, manage cache lifetime and avoid mutable shared state.",
+    "remember": "Share the tree type, not each tree's position.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Each tree copies type data",
+        "title": "Each tree copies type data",
+        "description": "Many map trees duplicate species and color while their positions differ.",
+        "insight": "Combining immutable type data with per-instance positions duplicates state as the count grows.",
+        "action": "Plant another matching tree",
+        "graphNote": "Two trees retain different type objects.",
+        "codeNote": "Two trees retain different type objects."
+      },
+      {
+        "number": "02",
+        "label": "Repeated state grows",
+        "title": "Repeated state grows",
+        "description": "Add more trees without duplicating identical species data.",
+        "insight": "Combining immutable type data with per-instance positions duplicates state as the count grows.",
+        "action": "Extract shared tree types",
+        "graphNote": "A third tree duplicates type state again.",
+        "codeNote": "A third tree duplicates type state again."
+      },
+      {
+        "number": "03",
+        "label": "Separate type and position",
+        "title": "Separate type and position",
+        "description": "Store species and color as immutable intrinsic state in TreeType.",
+        "insight": "Store species and color as immutable intrinsic state in TreeType. A factory caches by the full intrinsic-state key; each Tree retains a type reference and its extrinsic position. The example verifies sharing rather than claiming measured memory savings.",
+        "action": "Verify type reuse",
+        "graphNote": "The factory shares an immutable type keyed by species and color.",
+        "codeNote": "The factory shares an immutable type keyed by species and color."
+      },
+      {
+        "number": "04",
+        "label": "Reuse one type across more trees",
+        "title": "Reuse one type across more trees",
+        "description": "Share the tree type, not each tree's position.",
+        "insight": "Split state carefully, manage cache lifetime and avoid mutable shared state.",
+        "action": "Start again",
+        "graphNote": "Three trees share one type while retaining independent positions.",
+        "codeNote": "Three trees share one type while retaining independent positions."
+      }
+    ],
+    "labels": {
+      "a": "Tree A · position 1",
+      "b": "Tree B · position 2",
+      "c": "Tree C · position 3",
+      "typeA": "Type copy A",
+      "typeB": "Type copy B",
+      "typeC": "Type copy C",
+      "factory": "Type factory",
+      "shared": "Shared tree type"
+    },
+    "annotations": [
+      {},
+      {
+        "a": "Same responsibility",
+        "typeA": "Same responsibility",
+        "b": "Same responsibility",
+        "typeB": "Same responsibility",
+        "c": "New structure",
+        "typeC": "Focus of this step"
+      },
+      {
+        "a": "Same responsibility",
+        "factory": "New structure",
+        "b": "Same responsibility",
+        "shared": "Focus of this step"
+      },
+      {
+        "a": "Same responsibility",
+        "shared": "Focus of this step",
+        "b": "Same responsibility",
+        "c": "New structure"
+      }
+    ],
+    "principleTitle": "Share intrinsic state, separate extrinsic state",
+    "keyIdeas": [
+      "Species and color do not vary with a tree's position and can be shared immutably.",
+      "Positions belong to context or instances, not to the shared type."
+    ],
+    "distinction": "Singleton limits instance count; Flyweight can maintain multiple shared types keyed by their full intrinsic state."
+  },
+  "proxy": {
+    "scenario": "Creating a large image loads it immediately, even before preview is opened.",
+    "request": "Load on first display and reuse the loaded image afterward.",
+    "problem": "Direct construction fixes the loading time. Per-caller lazy-loading branches duplicate resource management.",
+    "solution": "A proxy implements the same display interface and delays constructing the real image. First display loads it, later calls delegate to the retained object. Callers use the proxy as an image.",
+    "benefits": [
+      "Load resources only when needed.",
+      "Reuse the created object for later calls.",
+      "Centralize access control at the object boundary."
+    ],
+    "when": "Use it to control access through lazy loading, authorization, caching or remote boundaries.",
+    "avoid": "Skip it for cheap access. A proxy cannot make remote failures disappear.",
+    "tradeoff": "It can delay costs and errors and needs a cache lifetime. Proxies primarily control access; decorators add responsibilities.",
+    "remember": "Keep the interface and let a proxy decide when to access the real object.",
+    "stages": [
+      {
+        "number": "01",
+        "label": "Load the image on creation",
+        "title": "Load the image on creation",
+        "description": "Creating a large image loads it immediately, even before preview is opened.",
+        "insight": "Direct construction fixes the loading time. Per-caller lazy-loading branches duplicate resource management.",
+        "action": "Create without displaying",
+        "graphNote": "Constructing the real image increments the load count.",
+        "codeNote": "Constructing the real image increments the load count."
+      },
+      {
+        "number": "02",
+        "label": "Load without opening preview",
+        "title": "Load without opening preview",
+        "description": "Load on first display and reuse the loaded image afterward.",
+        "insight": "Direct construction fixes the loading time. Per-caller lazy-loading branches duplicate resource management.",
+        "action": "Add a lazy proxy",
+        "graphNote": "Construction loads once even without display.",
+        "codeNote": "Construction loads once even without display."
+      },
+      {
+        "number": "03",
+        "label": "A proxy delays construction",
+        "title": "A proxy delays construction",
+        "description": "A proxy implements the same display interface and delays constructing the real image.",
+        "insight": "A proxy implements the same display interface and delays constructing the real image. First display loads it, later calls delegate to the retained object. Callers use the proxy as an image.",
+        "action": "Display twice",
+        "graphNote": "Creating the proxy leaves the load count at 0.",
+        "codeNote": "Creating the proxy leaves the load count at 0."
+      },
+      {
+        "number": "04",
+        "label": "Load once and display repeatedly",
+        "title": "Load once and display repeatedly",
+        "description": "Keep the interface and let a proxy decide when to access the real object.",
+        "insight": "It can delay costs and errors and needs a cache lifetime. Proxies primarily control access; decorators add responsibilities.",
+        "action": "Start again",
+        "graphNote": "Displaying twice creates the real image only once.",
+        "codeNote": "Displaying twice creates the real image only once."
+      }
+    ],
+    "labels": {
+      "caller": "Preview",
+      "image": "Real image",
+      "load": "Load resource",
+      "proxy": "Image proxy",
+      "cache": "Loaded instance"
+    },
+    "annotations": [
+      {},
+      {
+        "caller": "Same responsibility",
+        "image": "Same responsibility",
+        "load": "Focus of this step"
+      },
+      {
+        "caller": "Same responsibility",
+        "proxy": "Focus of this step"
+      },
+      {
+        "caller": "Same responsibility",
+        "proxy": "Same responsibility",
+        "image": "Focus of this step",
+        "cache": "New structure"
+      }
+    ],
+    "principleTitle": "Control access before delegating",
+    "keyIdeas": [
+      "Proxy and real object share an interface, preserving the caller's operation.",
+      "Construction timing, permissions and caching belong to the access boundary."
+    ],
+    "distinction": "Lazy loading postpones cost rather than removing it, and failures can surface at first use."
+  }
+}

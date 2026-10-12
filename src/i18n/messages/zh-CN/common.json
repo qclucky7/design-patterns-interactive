@@ -1,0 +1,12 @@
+{
+  "siteTitle": "设计模式 · 看懂设计模式为什么有效",
+  "siteDescription": "用真实开发场景、结构动画和代码示例，理解设计模式解决了什么问题。",
+  "brandName": "设计模式",
+  "nav": ["模式讲解", "核心思想", "适用场景"],
+  "breadcrumb": ["设计模式", "行为型", "策略模式"],
+  "homeLabel": "首页",
+  "mainNavigationLabel": "主导航",
+  "siteLanguageLabel": "网站语言",
+  "brandHomeLabel": "设计模式 首页",
+  "searchLabel": "全站搜索"
+}

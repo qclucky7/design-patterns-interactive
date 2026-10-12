@@ -1,0 +1,183 @@
+{
+  "ui": {
+    "observe": "What changed",
+    "reset": "Reset this experiment"
+  },
+  "patterns": {
+    "singleton": {
+      "instruction": "Get both instances, then toggle the promotion. Do both readers change together?",
+      "feedback": {
+        "cart": "The cart has its settings. Get the background reference and compare the object IDs.",
+        "job": "Both entry points use the same object ID, not two separate settings objects.",
+        "toggle": "Compare the two readers: the shared setting changes, rather than two separate page values."
+      }
+    },
+    "factory-method": {
+      "instruction": "Choose email or SMS and send. Watch the middle product-creation step.",
+      "feedback": {
+        "email": "Email is selected. Preparation and sending keep the same workflow.",
+        "sms": "SMS is selected. The surrounding notification workflow is reused.",
+        "send": "Sent. The creator supplies a different sender within the same business workflow."
+      }
+    },
+    "abstract-factory": {
+      "instruction": "Select the dark factory. Watch the button and checkbox change as one family.",
+      "feedback": {
+        "light": "Both controls belong to the light product family.",
+        "dark": "One selection replaces both kinds of controls, not two independent settings."
+      }
+    },
+    "builder": {
+      "instruction": "Enable the header and build. Then disable it. Compare the draft with the built task.",
+      "feedback": {
+        "format": "The format changes only the draft. An already-built task keeps its format until you build again.",
+        "header": "Only the draft changes. An already-built task stays unchanged.",
+        "compress": "Compression changes the draft. Build delivers a new task.",
+        "build": "The right side now holds an independent task. Change the draft to compare them."
+      }
+    },
+    "prototype": {
+      "instruction": "Try a shallow copy and add a tag. Reset, clone, and add a tag again. Does the template change?",
+      "feedback": {
+        "shallow": "The copy shares the template's tag list. Add a tag to the copy.",
+        "clone": "This copy has its own tag list. Edit it and check that the template stays unchanged.",
+        "edit": "Compare the two tag lists: the shallow copy affects the template; an independent clone does not.",
+        "reset": "The template is restored. Try the other copying method."
+      }
+    },
+    "adapter": {
+      "instruction": "Drag the amount. Watch business yuan become SDK cents.",
+      "feedback": {
+        "amount": "The SDK receives 100 times the business amount. The adapter handles the unit conversion."
+      }
+    },
+    "bridge": {
+      "instruction": "Choose urgent, then switch email and SMS. Can form and channel vary independently?",
+      "feedback": {
+        "normal": "The form is normal; the selected channel is unchanged.",
+        "urgent": "The urgent marker is added without changing the channel.",
+        "email": "Only the channel changes to email.",
+        "sms": "Only the channel changes to SMS; the form remains independently selectable."
+      }
+    },
+    "composite": {
+      "instruction": "Add an item, then wrap the bundle. Does another level incorrectly increase the total?",
+      "feedback": {
+        "add": "The total increases by 10. Items return their prices; the bundle sums them.",
+        "nest": "Wrapping adds a level, not a price. Items and bundles support the same total operation.",
+        "reset": "The tree is restored to two items, 10 and 20, totaling 30."
+      }
+    },
+    "decorator": {
+      "instruction": "Add milk, then sugar, then remove the outer layer. Compare the layers and the price.",
+      "feedback": {
+        "milk": "A milk wrapper adds 2 while keeping its inner drink intact.",
+        "sugar": "A sugar wrapper adds 1 without introducing a new coffee subclass.",
+        "remove": "Only the most recently added wrapper is removed.",
+        "reset": "All wrappers are removed. The base coffee costs 5."
+      }
+    },
+    "facade": {
+      "instruction": "Start the system. Watch the database, cache, and logging complete in order.",
+      "feedback": {
+        "start": "The subsystems run in order. The facade coordinates them for the caller.",
+        "reset": "The startup sequence is cleared. Run it again to watch the order."
+      }
+    },
+    "flyweight": {
+      "instruction": "Plant two oaks, then a pine. Compare tree count with shared type count.",
+      "feedback": {
+        "oak": "Oak selected. Planted oaks share type data but keep individual positions.",
+        "pine": "Pine selected. The first planted pine adds one shared type.",
+        "plant": "Compare counts and type IDs: the type is shared; each position remains separate.",
+        "reset": "The map and type pool are cleared."
+      }
+    },
+    "proxy": {
+      "instruction": "Create a proxy, then display twice. Watch when the real load count changes from 0 to 1.",
+      "feedback": {
+        "create": "The proxy exists, but the image is not loaded yet. Display it next.",
+        "display": "The first display loads the image; subsequent displays reuse it. Loads remain at 1.",
+        "reset": "The proxy and image are cleared; loads return to 0."
+      }
+    },
+    "chain-of-responsibility": {
+      "instruction": "Submit an 800 refund, then try 6000. Watch forwarding, handling, and the unhandled case.",
+      "feedback": {
+        "amount": "Amount changed, not submitted. Submit to see the handling path.",
+        "submit": "Follow the chain left to right: forward if over the limit, handle at the first eligible person, otherwise unhandled."
+      }
+    },
+    "command": {
+      "instruction": "Insert to turn A into AB, then undo. Watch the text and undo history change together.",
+      "feedback": {
+        "text": "This is pending input. Execute the insertion to change the editor.",
+        "execute": "The text is appended and the operation enters history. You can undo it now.",
+        "undo": "The last command is undone. The editor returns to its previous text."
+      }
+    },
+    "interpreter": {
+      "instruction": "Set age above 18, then uncheck membership. Compare each condition with the combined result.",
+      "feedback": {
+        "age": "Age is evaluated immediately. Both conditions must be true for the combined result.",
+        "member": "Membership is evaluated separately. The combined result is false if either condition is false."
+      }
+    },
+    "iterator": {
+      "instruction": "Read the next items, then switch to reverse. The collection stays in place while reading order changes.",
+      "feedback": {
+        "forward": "Reading starts at A; the collection remains A, B, C.",
+        "reverse": "Reading starts at C without reversing the original collection.",
+        "next": "The highlighted song is the item just read. The iterator tracks the position.",
+        "reset": "The reading position is reset; the songs are unchanged."
+      }
+    },
+    "mediator": {
+      "instruction": "Edit the search, then clear it. Watch the mediator synchronize the results.",
+      "feedback": {
+        "query": "The mediator receives the search event and updates results; the input does not call the result component.",
+        "clear": "The clear button notifies the mediator, which clears both input and results."
+      }
+    },
+    "memento": {
+      "instruction": "Save A, edit the text to ABC, then restore the snapshot.",
+      "feedback": {
+        "text": "Current text changes, but saved snapshots retain their original content.",
+        "save": "The snapshot stores this text and cursor. Edit again, then restore it to compare.",
+        "restore": "Text and cursor return to the saved moment. State is restored rather than operations replayed."
+      }
+    },
+    "observer": {
+      "instruction": "Publish once, unsubscribe the display, then publish again. Compare the two notification histories.",
+      "feedback": {
+        "display": "Subscription changes affect future notifications, not existing history.",
+        "email": "Email subscription is independent. The publisher notifies current subscribers only.",
+        "publish": "Stock increased. Only currently subscribed receivers get this new notification.",
+        "reset": "Notification history is cleared; stock and subscriptions stay unchanged."
+      }
+    },
+    "state": {
+      "instruction": "Click three times: start, pause, resume. The same action behaves according to the current state.",
+      "feedback": {
+        "click": "The highlighted box is the current state. The history shows how the same action causes different transitions.",
+        "stop": "The player is stopped. Clicking again starts playback."
+      }
+    },
+    "template-method": {
+      "instruction": "Import CSV, then JSON. Which of the three steps changes?",
+      "feedback": {
+        "csv": "CSV uses comma splitting in the transform step; reading and saving stay the same.",
+        "json": "JSON replaces the transform step with JSON parsing.",
+        "run": "Both formats produce A and B. The fixed workflow reuses reading and saving."
+      }
+    },
+    "visitor": {
+      "instruction": "Compute sizes, then export names. The same file structure supports two different operations.",
+      "feedback": {
+        "size": "Size calculation selected. Visit to compute the total without changing the files.",
+        "names": "Name export selected. No export logic needs to be added to each file node.",
+        "visit": "The selected visitor performs the operation. Switch visitors to change the result, not the structure."
+      }
+    }
+  }
+}

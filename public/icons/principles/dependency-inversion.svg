@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64">
+  <desc>High-level policy and implementation depend on a shared abstraction</desc>
+  <g fill="none" stroke="#191d22" stroke-width="2.5" stroke-linecap="square" stroke-linejoin="miter">
+    <rect x="24" y="7" width="16" height="16" stroke="#315dce"/>
+    <rect x="6" y="42" width="16" height="16" fill="#191d22"/>
+    <rect x="42" y="42" width="16" height="16"/>
+    <path d="M14 42V31H28V24M50 42V31H36V24" stroke="#315dce"/>
+    <path d="M25 27L28 24L31 27M33 27L36 24L39 27" stroke="#315dce"/>
+  </g>
+</svg>
